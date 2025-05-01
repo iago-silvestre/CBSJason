@@ -1,1 +1,1 @@
-Experimental version of CBSJason available https://github.com/leandroBecker/CBSjason/[here]
+Experimental version of CBSJason, original available https://github.com/leandroBecker/CBSjason/[here]
