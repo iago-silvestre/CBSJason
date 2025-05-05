@@ -1796,6 +1796,7 @@ public class TransitionSystem implements Serializable {
         }
 
         try {
+            System.out.println(C.CPM.size());
             //if(cbsPercepts != null){  //FIX remove in optmized version (above did not work)
             if(C.CPM.size() > 0){
                 System.out.println("entering critical mode");
