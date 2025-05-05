@@ -152,7 +152,7 @@ public class TransitionSystem implements Serializable {
          C.CLM.put(tp1.getPredicateIndicator(), planL1);
 
         //LBB: testing what should be the final code
-         C.CLM.putAll(ag.getPL().getCRP());
+        // C.CLM.putAll(ag.getPL().getCRP());
 
 
 }
