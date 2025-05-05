@@ -1803,8 +1803,8 @@ public class TransitionSystem implements Serializable {
         }
 
         try {
-            if(count>0){  //FIX remove in optmized version (above did not work)
-            //if(C.CPM.size() > 0){
+            //if(count>0){  //FIX remove in optmized version (above did not work)
+            if(C.CPM.size() > 0){
                 System.out.println("entering critical mode");
                 cModeActive = true;
                 getAg().getBB().add(cModeLit);
@@ -1816,7 +1816,6 @@ public class TransitionSystem implements Serializable {
                 //3. trigger all elements within CRL (enabled CRs)
                 ActionExec action = null;
                 for (PlanBody pBody : C.CRL){
-                    System.out.println("garantindo");
                     System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
                 //     boolean isEnabled = tp.getFirst();
