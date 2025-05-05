@@ -130,7 +130,8 @@ public class TransitionSystem implements Serializable {
             //cp1 = ASSyntax.parsePlan("+cb0 [cr]: belA <- critReac0.");
             // pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"sample_roscore\",\"update_time\", \"updateMsg\").");
 	       //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
-           cp0 = ASSyntax.parsePlan("+cb0 : true <- .print('Agent started').");
+           cp0 = ASSyntax.parsePlan("+cb0 : true <- .print('cp0 Agent started').");
+           cp1 = ASSyntax.parsePlan("+cb0 : true <- .print('cp1 Agent started').");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
