@@ -422,7 +422,6 @@ public class LocalAgArch extends AgArch implements Runnable, Serializable {
             if(percepts[i]){
                 Literal percept = new LiteralImpl("cb"+i); 
                 Trigger te = new Trigger(TEOperator.add, TEType.belief, percept);
-                System.out.println("  putting cb0 true");
                 C.CPM.put(te.getPredicateIndicator(), true);
             }
         }

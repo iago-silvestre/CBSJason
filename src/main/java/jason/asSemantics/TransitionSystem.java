@@ -147,7 +147,8 @@ public class TransitionSystem implements Serializable {
         //2. add entry to the map of critical plans
          //planL0.add(cp0);
          //C.CRL.add(pb0);
-         C.CPM.put(tp0.getPredicateIndicator(), false);
+         //C.CPM.put(tp0.getPredicateIndicator(), false);
+
          //C.getCLM().put(tp0.getPredicateIndicator(), planL0);
 
          //planL1.add(cp1);
