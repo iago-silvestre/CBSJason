@@ -129,17 +129,17 @@ public class TransitionSystem implements Serializable {
             //cp0 = ASSyntax.parsePlan("+cb0 [cr]: nope & belA <- critReac0.");
             //cp1 = ASSyntax.parsePlan("+cb0 [cr]: belA <- critReac0.");
             // pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"sample_roscore\",\"update_time\", \"updateMsg\").");
-	       //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
+           //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
            System.out.println("  debug CBSJason");
-           cp0 = ASSyntax.parsePlan("+cb0 [cr] : true <- .print(\"cp0 critical percept\").");
+           //cp0 = ASSyntax.parsePlan("+cb0 [cr] : true <- .print(\"cp0 critical percept\").");
            //cp1 = ASSyntax.parsePlan("+cb0 [cr] : <- .print(\"cp1 critical percept\").");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
         PlanBody        pb0 = cp0.getBody();
-        System.out.println(pb0);
+        //System.out.println(pb0);
         Trigger         tp0 = cp0.getTrigger();
-        System.out.println(tp0);
+        //System.out.println(tp0);
 
         //PlanBody        pb1 = cp1.getBody();
         //Trigger         tp1 = cp1.getTrigger();
