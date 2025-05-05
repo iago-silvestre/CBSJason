@@ -1787,7 +1787,7 @@ public class TransitionSystem implements Serializable {
             start = System.nanoTime();
             synchronized (C.syncApPlanSense) {
                 cbsPercepts = getAgArch().perceiveCP();
-                //System.out.println(Arrays.toString(cbsPercepts));
+                System.out.println(Arrays.toString(cbsPercepts));
             }
             endPer = System.nanoTime();           
         } catch (Exception e) {
@@ -1796,8 +1796,8 @@ public class TransitionSystem implements Serializable {
         }
 
         try {
-            // if(cbsPercepts != null){  //FIX remove in optmized version (above did not work)
-            if(C.CPM.size() > 0){
+            if(cbsPercepts != null){  //FIX remove in optmized version (above did not work)
+            //if(C.CPM.size() > 0){
                 System.out.println("entering critical mode");
                 cModeActive = true;
                 getAg().getBB().add(cModeLit);
