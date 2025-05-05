@@ -1816,6 +1816,7 @@ public class TransitionSystem implements Serializable {
                 //3. trigger all elements within CRL (enabled CRs)
                 ActionExec action = null;
                 for (PlanBody pBody : C.CRL){
+                    System.out.println("garantindo");
                     System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
                 //     boolean isEnabled = tp.getFirst();
