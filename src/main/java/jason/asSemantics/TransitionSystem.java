@@ -1787,7 +1787,7 @@ public class TransitionSystem implements Serializable {
             start = System.nanoTime();
             synchronized (C.syncApPlanSense) {
                 cbsPercepts = getAgArch().perceiveCP();
-                System.out.println(Arrays.toString(cbsPercepts));
+                //System.out.println(Arrays.toString(cbsPercepts));
             }
             endPer = System.nanoTime();           
         } catch (Exception e) {
