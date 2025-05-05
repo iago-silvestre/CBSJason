@@ -131,8 +131,8 @@ public class TransitionSystem implements Serializable {
             // pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"sample_roscore\",\"update_time\", \"updateMsg\").");
 	       //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
            System.out.println("  debug CBSJason");
-           cp0 = ASSyntax.parsePlan("+cb0 : true <- .print(\"cp0 critical percept\").");
-           cp1 = ASSyntax.parsePlan("+cb0 : true <- .print(\"cp1 critical percept\").");
+           cp0 = ASSyntax.parsePlan("+cb0 [cr] : true <- .print(\"cp0 critical percept\").");
+           //cp1 = ASSyntax.parsePlan("+cb0 [cr] : <- .print(\"cp1 critical percept\").");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
@@ -141,18 +141,18 @@ public class TransitionSystem implements Serializable {
         Trigger         tp0 = cp0.getTrigger();
         System.out.println(tp0);
 
-        PlanBody        pb1 = cp1.getBody();
-        Trigger         tp1 = cp1.getTrigger();
+        //PlanBody        pb1 = cp1.getBody();
+        //Trigger         tp1 = cp1.getTrigger();
 
         //2. add entry to the map of critical plans
          planL0.add(cp0);
-         C.CRL.add(pb0);
+         //C.CRL.add(pb0);
          C.CPM.put(tp0.getPredicateIndicator(), false);
          //C.getCLM().put(tp0.getPredicateIndicator(), planL0);
 
-         planL1.add(cp1);
-         C.CPM.put(tp1.getPredicateIndicator(), false);
-         C.CRL.add(pb1);
+         //planL1.add(cp1);
+        // C.CPM.put(tp1.getPredicateIndicator(), false);
+         //.CRL.add(pb1);
          //C.getCLM().put(tp1.getPredicateIndicator(), planL1);
 
         //LBB: testing what should be the final code
