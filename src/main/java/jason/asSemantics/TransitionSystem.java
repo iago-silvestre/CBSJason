@@ -116,11 +116,11 @@ public class TransitionSystem implements Serializable {
         if (ar != null)
             ar.setTS(this);
 
-        tmp_ReplaceAgentParser(C); //LBB: FIX, should not exist in future versions
+        tmp_ReplaceAgentParser(); //LBB: FIX, should not exist in future versions
     }
 
     //LBB: tmp function: used while agent-parser is unfinished
-    private void tmp_ReplaceAgentParser(Circumstance c){
+    private void tmp_ReplaceAgentParser(){
         Plan cp0 = null;
         Plan cp1 = null;
         List<Plan> planL0 = new ArrayList<Plan>();
@@ -146,10 +146,10 @@ public class TransitionSystem implements Serializable {
 
         //2. add entry to the map of critical plans
          planL0.add(cp0);
-         C.CLM.put(tp0.getPredicateIndicator(), planL0);
+         C.getCLM().put(tp0.getPredicateIndicator(), planL0);
 
          planL1.add(cp1);
-         C.CLM.put(tp1.getPredicateIndicator(), planL1);
+         C.getCLM().put(tp1.getPredicateIndicator(), planL1);
 
         //LBB: testing what should be the final code
         // C.CLM.putAll(ag.getPL().getCRP());
