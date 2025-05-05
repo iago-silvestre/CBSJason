@@ -1773,6 +1773,7 @@ public class TransitionSystem implements Serializable {
         Boolean[] cbsPercepts = null;
         long start = 0;
         long endPer = 0;
+        long count = 0;
 
         if(getAgArch().getCycleNumber() < 10)
             return; 
@@ -1788,7 +1789,7 @@ public class TransitionSystem implements Serializable {
             synchronized (C.syncApPlanSense) {
                 cbsPercepts = getAgArch().perceiveCP();
                 System.out.println(Arrays.toString(cbsPercepts));
-                long count = Arrays.stream(cbsPercepts).filter(Boolean::booleanValue).count();
+                count = Arrays.stream(cbsPercepts).filter(Boolean::booleanValue).count();
                 System.out.println("Number of true values: " + count);
             }
             endPer = System.nanoTime();           
