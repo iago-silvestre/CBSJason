@@ -129,9 +129,9 @@ public class TransitionSystem implements Serializable {
             //cp0 = ASSyntax.parsePlan("+cb0 [cr]: nope & belA <- critReac0.");
             //cp1 = ASSyntax.parsePlan("+cb0 [cr]: belA <- critReac0.");
             // pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"sample_roscore\",\"update_time\", \"updateMsg\").");
-	       cp0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
+	       //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
            System.out.println("  debug CBSJason");
-           //cp0 = ASSyntax.parsePlan("+cb0 : true <- .print(\"cp0 critical percept\").");
+           cp0 = ASSyntax.parsePlan("+cb0 : true <- .print(\"cp0 critical percept\").");
            cp1 = ASSyntax.parsePlan("+cb0 : true <- .print(\"cp1 critical percept\").");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
