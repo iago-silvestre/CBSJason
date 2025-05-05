@@ -1767,7 +1767,7 @@ public class TransitionSystem implements Serializable {
     }
 
     public void expeditedRP() {
-        System.out.println("expeditedRP");
+        //System.out.println("expeditedRP");
         //Boolean[] cActions = new Boolean[8];  
         Literal cModeLit = new LiteralImpl("criticalMode");
         Boolean[] cbsPercepts = null;
@@ -1787,6 +1787,7 @@ public class TransitionSystem implements Serializable {
             start = System.nanoTime();
             synchronized (C.syncApPlanSense) {
                 cbsPercepts = getAgArch().perceiveCP();
+                System.out.println(cbsPercepts);
             }
             endPer = System.nanoTime();           
         } catch (Exception e) {
