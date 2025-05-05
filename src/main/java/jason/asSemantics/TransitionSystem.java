@@ -1871,6 +1871,7 @@ public class TransitionSystem implements Serializable {
     }
 
     private void expedited_deliberate() {
+        System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
@@ -1878,7 +1879,6 @@ public class TransitionSystem implements Serializable {
                 List<Plan> planList = ag.getPL().getCLM().get(cpKey); //C.CLM.get(cpKey);
 
                 for (Plan plan : planList) {
-                    System.out.println("  debug expedited deliberate");
                     System.out.println(plan);
                     LogicalFormula context = plan.getContext();
                     // if ((context == null) || (ag.believes(context, new Unifier()))) { 
