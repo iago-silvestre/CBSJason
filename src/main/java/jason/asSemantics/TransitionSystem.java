@@ -137,7 +137,9 @@ public class TransitionSystem implements Serializable {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
         PlanBody        pb0 = cp0.getBody();
+        System.out.println(pb0);
         Trigger         tp0 = cp0.getTrigger();
+        System.out.println(tp0);
 
         PlanBody        pb1 = cp1.getBody();
         Trigger         tp1 = cp1.getTrigger();
