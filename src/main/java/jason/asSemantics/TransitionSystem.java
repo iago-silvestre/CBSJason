@@ -1878,6 +1878,8 @@ public class TransitionSystem implements Serializable {
                 List<Plan> planList = ag.getPL().getCLM().get(cpKey); //C.CLM.get(cpKey);
 
                 for (Plan plan : planList) {
+                    System.out.println("  debug expedited deliberate");
+                    System.out.println(plan);
                     LogicalFormula context = plan.getContext();
                     // if ((context == null) || (ag.believes(context, new Unifier()))) { 
                     //     C.CRL.add(plan.getBody());
