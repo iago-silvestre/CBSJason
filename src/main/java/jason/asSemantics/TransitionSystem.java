@@ -1889,14 +1889,12 @@ public class TransitionSystem implements Serializable {
                 List<Plan> planList = ag.getPL().getCLM().get(cpKey); //C.CLM.get(cpKey);
 
                 for (Plan plan : planList) {
-                    System.out.println(plan);
                     LogicalFormula context = plan.getContext();
                     // if ((context == null) || (ag.believes(context, new Unifier()))) { 
                     //     C.CRL.add(plan.getBody());
                     // }
                     if (context == null) { // context is true
                         C.CRL.add(plan.getBody());
-                        System.out.println("Plans to execute: " + plan.getBody());
                     }
                     else{
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
@@ -1911,7 +1909,6 @@ public class TransitionSystem implements Serializable {
                         // int i=0;
                         if (r != null && r.hasNext())
                             C.CRL.add(plan.getBody());
-                            System.out.println("Plans to execute: " + plan.getBody());
                     //         // if (r != null)
                     //         // while (r.hasNext()) {
                     //         //     r.next();
