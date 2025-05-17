@@ -116,7 +116,7 @@ public class TransitionSystem implements Serializable {
         if (ar != null)
             ar.setTS(this);
 
-        tmp_ReplaceAgentParser(); //LBB: FIX, should not exist in future versions
+        //tmp_ReplaceAgentParser(); //LBB: FIX, should not exist in future versions
     }
 
     //LBB: tmp function: used while agent-parser is unfinished
@@ -136,9 +136,9 @@ public class TransitionSystem implements Serializable {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
-        PlanBody        pb0 = cp0.getBody();
+        //PlanBody        pb0 = cp0.getBody();
         //System.out.println(pb0);
-        Trigger         tp0 = cp0.getTrigger();
+        //Trigger         tp0 = cp0.getTrigger();
         //System.out.println(tp0);
 
         //PlanBody        pb1 = cp1.getBody();
