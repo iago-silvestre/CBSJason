@@ -1887,6 +1887,11 @@ public class TransitionSystem implements Serializable {
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
                 PredicateIndicator  cpKey = entry.getKey();
+                for (Literal bel : ag.getBB()) {
+                    if (bel.getFunctor().equals(cpKey.getFunctor()) && bel.getArity() == cpKey.getArity()) {
+                        System.out.println("  [debug] critical_percept value: " + bel.getTerm(0));
+                    }
+                }
                 List<Plan> planList = ag.getPL().getCLM().get(cpKey); //C.CLM.get(cpKey);
 
                 for (Plan plan : planList) {
