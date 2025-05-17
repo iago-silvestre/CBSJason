@@ -1858,6 +1858,7 @@ public class TransitionSystem implements Serializable {
                         }
                         break;  //end internalAction
                 }
+                C.CPM.clear();
             long tExec = System.nanoTime();
             // Time logging - CURRENT
             // logger.info("LBB TransitionSystem, lbbPercept time (ns): " + String.valueOf(endPer-start) 
