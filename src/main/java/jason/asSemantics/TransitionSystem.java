@@ -1858,9 +1858,9 @@ public class TransitionSystem implements Serializable {
                         }
                         break;  //end internalAction
                 }
-                System.out.println("C.CPM before clearing: " + C.CPM);
-                System.out.println("Plans to execute: " + C.CRL);
-                C.CPM.clear();
+                //System.out.println("C.CPM before clearing: " + C.CPM);
+                //System.out.println("Plans to execute: " + C.CRL);
+                //C.CPM.clear();
             long tExec = System.nanoTime();
             // Time logging - CURRENT
             // logger.info("LBB TransitionSystem, lbbPercept time (ns): " + String.valueOf(endPer-start) 
@@ -1896,6 +1896,7 @@ public class TransitionSystem implements Serializable {
                     // }
                     if (context == null) { // context is true
                         C.CRL.add(plan.getBody());
+                        System.out.println("Plans to execute: " + plan.getBody());
                     }
                     else{
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
