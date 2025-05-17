@@ -1858,6 +1858,8 @@ public class TransitionSystem implements Serializable {
                         }
                         break;  //end internalAction
                 }
+                System.out.println("C.CPM before clearing: " + C.CPM);
+                System.out.println("Plans to execute: " + C.CRL);
                 C.CPM.clear();
             long tExec = System.nanoTime();
             // Time logging - CURRENT
