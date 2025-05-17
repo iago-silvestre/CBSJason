@@ -115,7 +115,7 @@ public class TransitionSystem implements Serializable {
 
         if (ar != null)
             ar.setTS(this);
-
+        System.out.println("  debug CBSJason");
         //tmp_ReplaceAgentParser(); //LBB: FIX, should not exist in future versions
     }
 
