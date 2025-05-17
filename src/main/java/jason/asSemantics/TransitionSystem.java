@@ -1911,6 +1911,7 @@ public class TransitionSystem implements Serializable {
                         // int i=0;
                         if (r != null && r.hasNext())
                             C.CRL.add(plan.getBody());
+                            System.out.println("Plans to execute: " + plan.getBody());
                     //         // if (r != null)
                     //         // while (r.hasNext()) {
                     //         //     r.next();
