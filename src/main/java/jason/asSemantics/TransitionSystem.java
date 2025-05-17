@@ -130,34 +130,13 @@ public class TransitionSystem implements Serializable {
             //cp1 = ASSyntax.parsePlan("+cb0 [cr]: belA <- critReac0.");
             // pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"sample_roscore\",\"update_time\", \"updateMsg\").");
            //pa0 = ASSyntax.parsePlan("+cb0 : true <- embedded.mas.bridges.jacamo.defaultEmbeddedInternalAction(\"roscore1\",\"adf\", \"N\").");
-           System.out.println("  debug CBSJason");
+           System.out.println("  debug tmp_ReplaceAgentParser");
            //cp0 = ASSyntax.parsePlan("+cb0 [cr] : true <- .print(\"cp0 critical percept\").");
            //cp1 = ASSyntax.parsePlan("+cb0 [cr] : <- .print(\"cp1 critical percept\").");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "*** LBB ERROR in Plan parsing", e);
         }
-        //PlanBody        pb0 = cp0.getBody();
-        //System.out.println(pb0);
-        //Trigger         tp0 = cp0.getTrigger();
-        //System.out.println(tp0);
 
-        //PlanBody        pb1 = cp1.getBody();
-        //Trigger         tp1 = cp1.getTrigger();
-
-        //2. add entry to the map of critical plans
-         //planL0.add(cp0);
-         //C.CRL.add(pb0);
-         //C.CPM.put(tp0.getPredicateIndicator(), false);
-
-         //C.getCLM().put(tp0.getPredicateIndicator(), planL0);
-
-         //planL1.add(cp1);
-        // C.CPM.put(tp1.getPredicateIndicator(), false);
-         //.CRL.add(pb1);
-         //C.getCLM().put(tp1.getPredicateIndicator(), planL1);
-
-        //LBB: testing what should be the final code
-        // C.CLM.putAll(ag.getPL().getCRP());
 
 
 }
@@ -499,7 +478,6 @@ public class TransitionSystem implements Serializable {
                             for (IntendedMeans im: i) {
                                 if (im.getPlan().hasSubPlans()) {
                                     List<Plan> relPlans = im.getPlan().getSubPlans().getCandidatePlans(C.SE.getTrigger());
-                                    //System.out.println("***"+C.SE.getTrigger()+" try plans in "+im.getPlan().getTrigger()+" -- "+(relPlans != null));
                                     if (relPlans != null) {
                                         for (Plan p: relPlans) {
                                             // test if we have an option
@@ -784,9 +762,6 @@ public class TransitionSystem implements Serializable {
             // begin tail recursion optimisation (TRO)
             if (setts.isTROon()) {
                 IntendedMeans top = C.SE.intention.peek(); // top = the IM that will be removed from the intention due to TRO
-                //System.out.println(top.getTrigger().isGoal()+"=1="+im.getTrigger().isGoal());
-                //System.out.println(top.getTrigger().getLiteral().getPredicateIndicator()+"=2="+im.getTrigger().getLiteral().getPredicateIndicator());
-                //System.out.println(top.getTrigger()+"=3="+im.getTrigger());
 
                 // next test if the condition for TOR (comparing top and the IM being added)
                 if (top != null &&
@@ -1304,15 +1279,11 @@ public class TransitionSystem implements Serializable {
     private void joinRenamedVarsIntoIntentionUnifier(IntendedMeans im, Unifier values) {
         if (im.renamedVars != null) {
             for (VarTerm ov: im.renamedVars.function.keySet()) {
-                //System.out.println("looking for a value for "+ov+" in "+im.renamedVars+" and "+topIM.unif);
                 UnnamedVar vt = (UnnamedVar)im.renamedVars.function.get(ov);
-                //System.out.println("   via "+vt);
                 im.unif.unifiesNoUndo(ov, vt); // introduces the renaming in the current unif
                 // if vt has got a value from the top (a "return" value), include this value in the current unif
                 Term vl = values.function.get(vt);
-                //System.out.println(ov+"="+vt+"="+vl);
                 if (vl != null) { // vt has value in top
-                    //System.out.println("   and found "+vl);
                     vl = vl.capply(values);
                     if (vl.isLiteral())
                         ((Literal)vl).makeVarsAnnon();
@@ -1772,7 +1743,6 @@ public class TransitionSystem implements Serializable {
     }
 
     public void expeditedRP() {
-        //System.out.println("expeditedRP");
         //Boolean[] cActions = new Boolean[8];  
         Literal cModeLit = new LiteralImpl("criticalMode");
         Boolean[] cbsPercepts = null;
@@ -1806,7 +1776,7 @@ public class TransitionSystem implements Serializable {
         try {
             //if(count>0){  //FIX remove in optmized version (above did not work)
             if(C.CPM.size() > 0){
-                System.out.println("entering critical mode");
+                //System.out.println("entering critical mode");
                 cModeActive = true;
                 getAg().getBB().add(cModeLit);
                 // int i=0;
@@ -1816,7 +1786,7 @@ public class TransitionSystem implements Serializable {
 
                 //3. trigger all elements within CRL (enabled CRs)
                 ActionExec action = null;
-                System.out.println(C.CRL);
+                //System.out.println(C.CRL);
                 for (PlanBody pBody : C.CRL){
                     //System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
@@ -1829,14 +1799,14 @@ public class TransitionSystem implements Serializable {
             
                     switch (pBody.getBodyType()) {
                     case action:
-                        System.out.println("action");
+                        //System.out.println("action");
                         action = new ActionExec(bodyTer, null); 
                         if (action != null) 
                             getAgArch().act(action); 
                         break; //end action
                     
                     case internalAction:
-                        System.out.println("internalAction");
+                        //System.out.println("internalAction");
                         boolean ok = false;
                         List<Term> errorAnnots = null;
                         try {
@@ -1859,9 +1829,6 @@ public class TransitionSystem implements Serializable {
                         }
                         break;  //end internalAction
                 }
-                //System.out.println("C.CPM before clearing: " + C.CPM);
-                //System.out.println("Plans to execute: " + C.CRL);
-                //C.CPM.clear();
             long tExec = System.nanoTime();
             // Time logging - CURRENT
             // logger.info("LBB TransitionSystem, lbbPercept time (ns): " + String.valueOf(endPer-start) 
@@ -1882,16 +1849,16 @@ public class TransitionSystem implements Serializable {
     }
 
     private void expedited_deliberate() {
-        System.out.println("  debug expedited deliberate");
+        //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
                 PredicateIndicator  cpKey = entry.getKey();
-                for (Literal bel : ag.getBB()) {
+                /*for (Literal bel : ag.getBB()) {
                     if (bel.getFunctor().equals("critical_percept") && bel.getArity() == 1) {
                         System.out.println("  [debug] critical_percept value: " + bel.getTerm(0));
                     }
-                }
+                }*/
                 List<Plan> planList = ag.getPL().getCLM().get(cpKey); //C.CLM.get(cpKey);
 
                 for (Plan plan : planList) {
