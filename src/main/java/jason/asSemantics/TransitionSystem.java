@@ -1889,14 +1889,14 @@ public class TransitionSystem implements Serializable {
 
                         Iterator<Unifier> r = context.logicalConsequence(ag, new Unifier()); //relUn); //opt.getUnifier());
                         // int i=0;
-                        if (r != null && r.hasNext())
-                        System.out.println("  [debug] r != null && r.hasNext()" );
-                            C.CRL.add(plan.getBody());
-                              if (r != null)
-                              while (r.hasNext()) {
-                                  r.next();
-                                  C.CRL.add(plan.getBody());
-                              }
+                        if (r != null && r.hasNext()){
+                            System.out.println("  [debug] r != null && r.hasNext()" );
+                            PlanBody current = plan.getBody();
+                            while (current != null) {
+                                C.CRL.add(current);
+                                current = current.getBodyNext();
+                            }
+                        }
                     }
                 }
         }
