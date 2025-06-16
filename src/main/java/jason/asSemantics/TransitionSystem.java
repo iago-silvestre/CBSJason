@@ -1794,6 +1794,8 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
+                    IntendedMeans im = curInt.peek();
+                    Unifier     u = im.unif;
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm;  
 
@@ -1830,20 +1832,29 @@ public class TransitionSystem implements Serializable {
                             break;  //end internalAction
 
                         case test:
-                            Literal testLit = (Literal) bTerm;
-                            boolean matched = false;
-                            Unifier un = intention.peek().getUnif();
-                            Iterator<Literal> it = ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator());
-                            while (it.hasNext()) {
-                                Literal bel = it.next();
-                                if (un.unifies(testLit, bel)) {
-                                    matched = true;//
-                                    break;
+                            LogicalFormula f = (LogicalFormula)bTerm;
+                            if (ag.believes(f, u)) {
+                                removeActionReQueue(curInt);
+                            } else {
+                                boolean fail = true;
+                                // generate event when using literal in the test (no events for log. expr. like ?(a & b))
+                                if (f.isLiteral() && !(f instanceof BinaryStructure)) {
+                                    body = prepareBodyForEvent(body, u, curInt.peek());
+                                    if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
+                                        Trigger te = new Trigger(TEOperator.add, TEType.test, body);
+                                        evt = new Event(te, curInt);
+                                        if (ag.getPL().hasCandidatePlan(te)) {
+                                            if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
+                                            C.addEvent(evt);
+                                            stepAct = State.StartRC;
+                                            fail = false;
+                                        }
+                                    }
                                 }
-                            }
-                            if (!matched) {
-                                logger.warning("Test goal failed: " + testLit);
-                                return;
+                                if (fail) {
+                                    if (logger.isLoggable(Level.FINE)) logger.fine("Test '"+bTerm+"' failed ("+h.getSrcInfo()+").");
+                                    generateGoalDeletion(curInt, JasonException.createBasicErrorAnnots("test_goal_failed", "Failed to test '"+bTerm+"'"), ASSyntax.createAtom("test_goal_failed"));
+                                }
                             }
                             break;
 
