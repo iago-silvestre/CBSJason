@@ -1828,7 +1828,31 @@ public class TransitionSystem implements Serializable {
                                 logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
                             }
                             break;  //end internalAction
+                        
 
+                        case belief:
+                            //System.out.println("belief query");
+                            boolean beliefResult = false;
+                            try {
+                                // Query the belief base for the specified belief
+                                Iterator<Unifier> solutions = ag.getBB().getCandidateBeliefs(bodyTer, null);
+                                if (solutions != null && solutions.hasNext()) {
+                                    // Found at least one solution
+                                    beliefResult = true;
+                                    Unifier unifier = solutions.next();
+                                    // Apply the unification to bind variables
+                                    if (unifier != null) {
+                                        // Update the current unifier with the belief query results
+                                        getC().getUnif().compose(unifier);
+                                    }
+                                }
+                                // Set the result for further processing
+                                ok = beliefResult;
+                            } catch (Exception e) {
+                                logger.log(Level.SEVERE, "Error processing belief query: " + bodyTer.getErrorMsg() + ": " + e.getMessage(), e);
+                                ok = false;
+                            }
+                            break; //end belief
 
                         }
                     
