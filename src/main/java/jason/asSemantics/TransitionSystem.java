@@ -1829,16 +1829,14 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
 
-                        case test:  // Handle ?bel(...) goals here
+                        case test:
                             Literal testLit = (Literal) bTerm;
-                            Unifier unifier = new Unifier();
-                            if (ag.getBB().contains(testLit, unifier)) {
-                                // Apply resulting unifier to agent’s unifier (if needed)
-                                ag.getTS().getC().getUnif().compose(unifier);
-                            } else {
-                                // Test failed — you can break the loop or skip plan
-                                logger.warning("Test goal failed: " + testLit);
-                                return; // or break / throw to skip plan
+                            for (Literal bel : ag.getBB().getCandidateBeliefs(testLit)) {
+                                Unifier u = testLit.unifies(bel);
+                                if (u != null) {
+                                    C.getUnifier().compose(u);
+                                    break;
+                                }
                             }
                             break;
 
