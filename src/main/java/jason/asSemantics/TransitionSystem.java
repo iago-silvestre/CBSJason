@@ -1870,13 +1870,7 @@ public class TransitionSystem implements Serializable {
                     //     C.CRL.add(plan.getBody());
                     // }
                     if (context == null) { // context is true
-                        PlanBody current = plan.getBody();
-                        System.out.println("  [debug] context == null" );
-                        while (current != null) {
-                            C.CRL.add(current);
-                            current = current.getBodyNext();
-                        }
-                        //C.CRL.add(plan.getBody());
+                        C.CRL.add(plan.getBody());
                     }
                     else{
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
@@ -1890,7 +1884,7 @@ public class TransitionSystem implements Serializable {
                         Iterator<Unifier> r = context.logicalConsequence(ag, new Unifier()); //relUn); //opt.getUnifier());
                         // int i=0;
                         if (r != null && r.hasNext()){
-                            System.out.println("  [debug] r != null && r.hasNext()" );
+                            //System.out.println("  [debug] r != null && r.hasNext()" );
                             PlanBody current = plan.getBody();
                             while (current != null) {
                                 C.CRL.add(current);
