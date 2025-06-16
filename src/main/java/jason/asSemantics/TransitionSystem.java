@@ -1794,6 +1794,7 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
+
                     final Intention curInt = C.SI;
                     IntendedMeans im = curInt.peek();
                     Unifier     u = im.unif;
@@ -1843,7 +1844,7 @@ public class TransitionSystem implements Serializable {
                                     bodyTer = prepareBodyForEvent(bodyTer, u, curInt.peek());
                                     if (bodyTer.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, bodyTer);
-                                        evt = new Event(te, curInt);
+                                        Event evt = new Event(te, curInt);
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
                                             C.addEvent(evt);
