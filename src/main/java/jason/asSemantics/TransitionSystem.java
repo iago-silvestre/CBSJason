@@ -1829,24 +1829,6 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
 
-                        case test:
-                            Literal testLit = (Literal) bTerm;
-                            boolean matched = false;
-
-                            for (Literal bel : ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator())) {
-                                Unifier u = new Unifier();
-                                if (testLit.match(bel, u)) {
-                                    C.getU().compose(u); // C is your Circumstance
-                                    matched = true;
-                                    break;
-                                }
-                            }
-
-                            if (!matched) {
-                                logger.warning("Test goal failed: " + testLit);
-                                return; // fail plan or handle as needed
-                            }
-                            break;
 
                         }
                     
