@@ -1835,7 +1835,7 @@ public class TransitionSystem implements Serializable {
                             Iterator<Literal> it = ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator());
                             while (it.hasNext()) {
                                 Literal bel = it.next();
-                                if (C.getU().unifies(testLit, bel)) {
+                                if (C.getUnif().unifies(testLit, bel)) {
                                     matched = true;
                                     break;
                                 }
