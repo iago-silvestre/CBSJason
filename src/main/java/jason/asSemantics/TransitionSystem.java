@@ -1833,7 +1833,9 @@ public class TransitionSystem implements Serializable {
                             Literal testLit = (Literal) bTerm;
                             boolean matched = false;
 
-                            for (Literal bel : ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator())) {
+                            Iterator<Literal> it = ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator());
+                            while (it.hasNext()) {
+                                Literal bel = it.next();
                                 Unifier u = new Unifier();
                                 if (testLit.match(bel, u)) {
                                     C.getU().compose(u);
@@ -1844,7 +1846,7 @@ public class TransitionSystem implements Serializable {
 
                             if (!matched) {
                                 logger.warning("Test goal failed: " + testLit);
-                                return; // or handle plan failure
+                                return; // or handle failure
                             }
                             break;
 
