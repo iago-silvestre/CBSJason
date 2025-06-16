@@ -1828,6 +1828,20 @@ public class TransitionSystem implements Serializable {
                                 logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
                             }
                             break;  //end internalAction
+
+                        case test:  // Handle ?bel(...) goals here
+                            Literal testLit = (Literal) bTerm;
+                            Unifier unifier = new Unifier();
+                            if (ag.getBB().contains(testLit, unifier)) {
+                                // Apply resulting unifier to agent’s unifier (if needed)
+                                ag.getTS().getC().getUnif().compose(unifier);
+                            } else {
+                                // Test failed — you can break the loop or skip plan
+                                logger.warning("Test goal failed: " + testLit);
+                                return; // or break / throw to skip plan
+                            }
+                            break;
+
                         }
                     
             long tExec = System.nanoTime();
