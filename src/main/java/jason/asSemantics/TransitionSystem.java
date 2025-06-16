@@ -1870,7 +1870,12 @@ public class TransitionSystem implements Serializable {
                     //     C.CRL.add(plan.getBody());
                     // }
                     if (context == null) { // context is true
-                        C.CRL.add(plan.getBody());
+                        PlanBody current = plan.getBody();
+                        while (current != null) {
+                            C.CRL.add(current);
+                            current = current.getBodyNext();
+                        }
+                        //C.CRL.add(plan.getBody());
                     }
                     else{
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
