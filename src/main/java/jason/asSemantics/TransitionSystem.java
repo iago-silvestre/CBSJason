@@ -1828,7 +1828,35 @@ public class TransitionSystem implements Serializable {
                                 logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
                             }
                             break;  //end internalAction
-                        
+                        case belief:
+                            //System.out.println("belief query");
+                            boolean beliefResult = false;
+                            try {
+                                // Query the belief base for the specified belief
+                                Iterator<Literal> candidates = ag.getBB().getCandidateBeliefs(bodyTer, null);
+                                if (candidates != null && candidates.hasNext()) {
+                                    // Try to unify with each candidate belief
+                                    while (candidates.hasNext() && !beliefResult) {
+                                        Literal candidate = candidates.next();
+                                        Unifier unifier = new Unifier();
+                                        if (getC().getUnif() != null) {
+                                            unifier.compose(getC().getUnif());
+                                        }
+                                        // Try to unify the query with the candidate belief
+                                        if (unifier.unifiesNoUndo(bodyTer, candidate)) {
+                                            beliefResult = true;
+                                            // Update the current unifier with the successful unification
+                                            getC().setUnif(unifier);
+                                        }
+                                    }
+                                }
+                                // Set the result for further processing
+                                ok = beliefResult;
+                            } catch (Exception e) {
+                                logger.log(Level.SEVERE, "Error processing belief query: " + bodyTer.getErrorMsg() + ": " + e.getMessage(), e);
+                                ok = false;
+                            }
+                            break; //end belief
 
                         }
                     
