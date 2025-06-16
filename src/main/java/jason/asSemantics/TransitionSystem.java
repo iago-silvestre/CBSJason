@@ -1832,11 +1832,12 @@ public class TransitionSystem implements Serializable {
                         case test:
                             Literal testLit = (Literal) bTerm;
                             boolean matched = false;
+                            Unifier un = intention.peek().getUnif();
                             Iterator<Literal> it = ag.getBB().getCandidateBeliefs(testLit.getPredicateIndicator());
                             while (it.hasNext()) {
                                 Literal bel = it.next();
-                                if (C.getUnif().unifies(testLit, bel)) {
-                                    matched = true;
+                                if (un.unifies(testLit, bel)) {
+                                    matched = true;//
                                     break;
                                 }
                             }
