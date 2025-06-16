@@ -1796,39 +1796,42 @@ public class TransitionSystem implements Serializable {
                     Literal   bodyTer = null;
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm;  
-            
-                    switch (pBody.getBodyType()) {
-                    case action:
-                        //System.out.println("action");
-                        action = new ActionExec(bodyTer, null); 
-                        if (action != null) 
-                            getAgArch().act(action); 
-                        break; //end action
-                    
-                    case internalAction:
-                        //System.out.println("internalAction");
-                        boolean ok = false;
-                        List<Term> errorAnnots = null;
-                        try {
-                            InternalAction ia = ((InternalActionLiteral)bTerm).getIA(ag);
-                            Term[] terms      = ia.prepareArguments(bodyTer, null); // clone and apply args
-                            Object oresult    = ia.execute(this, null, terms);
-                            if (oresult != null) {
-                                ok = oresult instanceof Boolean && (Boolean)oresult;
-                                if (!ok) { // IA returned false
-                                    errorAnnots = JasonException.createBasicErrorAnnots("ia_failed", "");
-                                }
-                            }                            
-                        } catch (Exception e) {
-                            if (bodyTer == null)
-                                logger.log(Level.SEVERE, "LBB: intention with null body in '"+pBody, e);
-                            else
+
+                    while (pBody != null) {
+                        switch (pBody.getBodyType()) {
+                        case action:
+                            //System.out.println("action");
+                            action = new ActionExec(bodyTer, null); 
+                            if (action != null) 
+                                getAgArch().act(action); 
+                            break; //end action
+                        
+                        case internalAction:
+                            //System.out.println("internalAction");
+                            boolean ok = false;
+                            List<Term> errorAnnots = null;
+                            try {
+                                InternalAction ia = ((InternalActionLiteral)bTerm).getIA(ag);
+                                Term[] terms      = ia.prepareArguments(bodyTer, null); // clone and apply args
+                                Object oresult    = ia.execute(this, null, terms);
+                                if (oresult != null) {
+                                    ok = oresult instanceof Boolean && (Boolean)oresult;
+                                    if (!ok) { // IA returned false
+                                        errorAnnots = JasonException.createBasicErrorAnnots("ia_failed", "");
+                                    }
+                                }                            
+                            } catch (Exception e) {
+                                if (bodyTer == null)
+                                    logger.log(Level.SEVERE, "LBB: intention with null body in '"+pBody, e);
+                                else
+                                    logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
+                            } catch (Error e) {
                                 logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
-                        } catch (Error e) {
-                            logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
+                            }
+                            break;  //end internalAction
                         }
-                        break;  //end internalAction
-                }
+                        pBody = pBody.getBodyNext();
+                    }
             long tExec = System.nanoTime();
             // Time logging - CURRENT
             // logger.info("LBB TransitionSystem, lbbPercept time (ns): " + String.valueOf(endPer-start) 
