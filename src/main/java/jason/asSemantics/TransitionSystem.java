@@ -1871,6 +1871,7 @@ public class TransitionSystem implements Serializable {
                     // }
                     if (context == null) { // context is true
                         PlanBody current = plan.getBody();
+                        System.out.println("  [debug] context == null" );
                         while (current != null) {
                             C.CRL.add(current);
                             current = current.getBodyNext();
