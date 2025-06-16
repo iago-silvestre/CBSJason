@@ -1797,7 +1797,6 @@ public class TransitionSystem implements Serializable {
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm;  
 
-                    while (pBody != null) {
                         switch (pBody.getBodyType()) {
                         case action:
                             //System.out.println("action");
@@ -1830,8 +1829,7 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
                         }
-                        pBody = pBody.getBodyNext();
-                    }
+                    
             long tExec = System.nanoTime();
             // Time logging - CURRENT
             // logger.info("LBB TransitionSystem, lbbPercept time (ns): " + String.valueOf(endPer-start) 
