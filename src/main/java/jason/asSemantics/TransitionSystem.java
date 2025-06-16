@@ -1840,9 +1840,9 @@ public class TransitionSystem implements Serializable {
                                 boolean fail = true;
                                 // generate event when using literal in the test (no events for log. expr. like ?(a & b))
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    body = prepareBodyForEvent(body, u, curInt.peek());
-                                    if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
-                                        Trigger te = new Trigger(TEOperator.add, TEType.test, body);
+                                    bodyTer = prepareBodyForEvent(bodyTer, u, curInt.peek());
+                                    if (bodyTer.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
+                                        Trigger te = new Trigger(TEOperator.add, TEType.test, bodyTer);
                                         evt = new Event(te, curInt);
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
