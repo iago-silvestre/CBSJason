@@ -1860,8 +1860,9 @@ public class TransitionSystem implements Serializable {
                                 if (uq.unifies(queryLit, belief)) {
                                     getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
 
-                                    u.compose(uq);     // apply unification to plan
-                                    curInt.pop();      // only pop AFTER you've used im.unif
+                                    u.compose(uq);
+                                    pBody.setDone(true);  // ✅ just mark this step as completed
+                                    matched = true;
                                     break;
                                 }
                             }
