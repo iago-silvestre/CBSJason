@@ -1758,6 +1758,7 @@ public class TransitionSystem implements Serializable {
                 unifiers.add(unif);
             }
         }
+        System.out.println(unifiers);
         return unifiers;
         }
 
