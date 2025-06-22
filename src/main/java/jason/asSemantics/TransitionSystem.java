@@ -1837,7 +1837,7 @@ public class TransitionSystem implements Serializable {
                             case test:
                             Literal queryLit = (Literal) bTerm;
 
-                            final Intention curInt = C.SI;
+                            //final Intention curInt = C.SI;
                             if (curInt == null) {
                                 getLogger().warning("curInt (C.SI) is null — skipping beliefQuery.");
                                 break;
