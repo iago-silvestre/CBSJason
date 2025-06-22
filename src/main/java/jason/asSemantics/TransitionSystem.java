@@ -1834,7 +1834,7 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
 
-                            case beliefQuery:
+                            case test:
                             Literal queryLit = (Literal) bTerm;
 
                             //final Intention curInt = C.SI;
