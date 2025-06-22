@@ -1836,18 +1836,31 @@ public class TransitionSystem implements Serializable {
 
                             case test:
                             Literal queryLit = (Literal) bTerm;
+
+                            final Intention curInt = C.SI;
+                            if (curInt == null) {
+                                getLogger().warning("curInt (C.SI) is null — skipping beliefQuery.");
+                                break;
+                            }
+
+                            IntendedMeans im = curInt.peek();
+                            if (im == null) {
+                                getLogger().warning("im is null — intention already finished?");
+                                break;
+                            }
+
                             for (Literal belief : getAg().getBB()) {
                                 Unifier uq = new Unifier();
                                 if (uq.unifies(queryLit, belief)) {
                                     getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
 
-                                    // Apply the result to the plan’s unifier
-                                    im.unif.compose(uq);  // 🔧 This is enough
-                                    curInt.pop();  // Removes the PlanBody from the stack
+                                    im.unif.compose(uq);  // apply unifier
+                                    curInt.pop();         // mark this step done
                                     break;
                                 }
                             }
                             break;
+
 
                         /*case test:
                             System.out.println("test switch case");
