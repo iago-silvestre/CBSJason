@@ -1843,7 +1843,7 @@ public class TransitionSystem implements Serializable {
 
                                     // Apply the result to the plan’s unifier
                                     im.unif.compose(uq);  // 🔧 This is enough
-
+                                    curInt.pop();  // Removes the PlanBody from the stack
                                     break;
                                 }
                             }
