@@ -1849,7 +1849,7 @@ public class TransitionSystem implements Serializable {
                                 break;
                             }
 
-                            Unifier u = im.unif; // get unifier BEFORE popping anything
+                            //Unifier u = im.unif; // get unifier BEFORE popping anything
 
                             for (Literal belief : getAg().getBB()) {
                                 Unifier uq = new Unifier();
