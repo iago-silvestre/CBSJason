@@ -1750,17 +1750,6 @@ public class TransitionSystem implements Serializable {
         long endPer = 0;
         long count = 0;
 
-        public List<Unifier> queryBelief(Literal queryLit) {
-        List<Unifier> unifiers = new ArrayList<>();
-        for (Literal belief : getAg().getBB()) {
-            Unifier unif = new Unifier();
-            if (unif.unifies(queryLit, belief)) {
-                unifiers.add(unif);
-            }
-        }
-        System.out.println(unifiers);
-        return unifiers;
-        }
 
         if(getAgArch().getCycleNumber() < 10)
             return; 
@@ -1845,7 +1834,21 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
 
-                        case test:
+                            case test:
+                            // New case to handle ?predicate(Var) queries
+                            System.out.println("test switch case");
+                            Literal queryLit = (Literal) bTerm;
+                            for (Literal belief : getAg().getBB()) {
+                                Unifier uq = new Unifier();
+                                if (uq.unifies(queryLit, belief)) {
+                                    // Print the matched unifier result for now
+                                    // You can store or use this however needed
+                                    getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
+                                }
+                            }
+                            break;
+
+                        /*case test:
                             System.out.println("test switch case");
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
@@ -1870,7 +1873,7 @@ public class TransitionSystem implements Serializable {
                                     System.out.println("failed test switch case");
                                     }
                             }
-                            break;
+                            break;*/
 
                         }
                     
