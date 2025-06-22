@@ -1797,6 +1797,10 @@ public class TransitionSystem implements Serializable {
                     Literal   bodyTer = null;
 
                     final Intention curInt = C.SI;
+                    if (curInt == null || curInt.peek() == null) {
+                    getLogger().warning("No current plan for this CRL entry. Skipping.");
+                    continue;
+                    }
                     IntendedMeans im = curInt.peek();
                     Unifier     u = im.unif;
                     if (bTerm instanceof Literal)
