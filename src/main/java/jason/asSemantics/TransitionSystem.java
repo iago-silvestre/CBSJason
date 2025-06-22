@@ -1835,18 +1835,16 @@ public class TransitionSystem implements Serializable {
                             break;  //end internalAction
 
                             case test:
-                            // New case to handle ?predicate(Var) queries
-                            System.out.println("test switch case");
                             Literal queryLit = (Literal) bTerm;
                             for (Literal belief : getAg().getBB()) {
                                 Unifier uq = new Unifier();
                                 if (uq.unifies(queryLit, belief)) {
-                                    // Print the matched unifier result for now
-                                    // You can store or use this however needed
                                     getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
-                                    im.unif.compose(uq); 
-                                    //u.compose(uq);  // <-- This is what binds FRL to 5 for the rest of the plan
-                                    break; // you probably want just the first match
+
+                                    // Apply the result to the plan’s unifier
+                                    im.unif.compose(uq);  // 🔧 This is enough
+
+                                    break;
                                 }
                             }
                             break;
