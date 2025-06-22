@@ -1843,7 +1843,7 @@ public class TransitionSystem implements Serializable {
                                 break;
                             }
 
-                            IntendedMeans im = curInt.peek();
+                            //IntendedMeans im = curInt.peek();
                             if (im == null) {
                                 getLogger().warning("im is null — intention already finished?");
                                 break;
