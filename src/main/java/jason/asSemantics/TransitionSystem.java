@@ -1844,6 +1844,8 @@ public class TransitionSystem implements Serializable {
                                     // Print the matched unifier result for now
                                     // You can store or use this however needed
                                     getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
+                                    u.compose(uq);  // <-- This is what binds FRL to 5 for the rest of the plan
+                                    break; // you probably want just the first match
                                 }
                             }
                             break;
