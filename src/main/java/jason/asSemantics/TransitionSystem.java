@@ -1834,6 +1834,7 @@ public class TransitionSystem implements Serializable {
                             break;  //end internalAction
 
                         case test:
+                            System.out.println("test switch case");
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
                                 removeActionReQueue(curInt);
