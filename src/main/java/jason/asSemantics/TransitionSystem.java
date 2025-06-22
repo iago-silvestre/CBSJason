@@ -1834,7 +1834,7 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction
 
-                            case test:
+                            case beliefQuery:
                             Literal queryLit = (Literal) bTerm;
 
                             //final Intention curInt = C.SI;
@@ -1845,22 +1845,23 @@ public class TransitionSystem implements Serializable {
 
                             //IntendedMeans im = curInt.peek();
                             if (im == null) {
-                                getLogger().warning("im is null — intention already finished?");
+                                getLogger().warning("im is null — no current plan to update?");
                                 break;
                             }
+
+                            Unifier u = im.unif; // get unifier BEFORE popping anything
 
                             for (Literal belief : getAg().getBB()) {
                                 Unifier uq = new Unifier();
                                 if (uq.unifies(queryLit, belief)) {
                                     getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
 
-                                    im.unif.compose(uq);  // apply unifier
-                                    curInt.pop();         // mark this step done
+                                    u.compose(uq);     // apply unification to plan
+                                    curInt.pop();      // only pop AFTER you've used im.unif
                                     break;
                                 }
                             }
                             break;
-
 
                         /*case test:
                             System.out.println("test switch case");
