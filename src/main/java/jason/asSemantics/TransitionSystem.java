@@ -1750,6 +1750,17 @@ public class TransitionSystem implements Serializable {
         long endPer = 0;
         long count = 0;
 
+        public List<Unifier> queryBelief(Literal queryLit) {
+        List<Unifier> unifiers = new ArrayList<>();
+        for (Literal belief : getAg().getBB()) {
+            Unifier unif = new Unifier();
+            if (unif.unifies(queryLit, belief)) {
+                unifiers.add(unif);
+            }
+        }
+        return unifiers;
+        }
+
         if(getAgArch().getCycleNumber() < 10)
             return; 
         // else if(getAgArch().getCycleNumber() < 11){
