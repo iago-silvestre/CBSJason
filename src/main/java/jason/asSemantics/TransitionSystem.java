@@ -1842,7 +1842,7 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction*/
 
-                            case test:
+                        /*case test:
                             System.out.println("test");    
                             Literal queryLit = (Literal) bTerm;
 
@@ -1857,9 +1857,9 @@ public class TransitionSystem implements Serializable {
                                     break;
                                 }
                             }
-                            break;
+                            break;*/
 
-                        /*case test:
+                        case test:
                             System.out.println("test switch case");
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
@@ -1884,7 +1884,7 @@ public class TransitionSystem implements Serializable {
                                     System.out.println("failed test switch case");
                                     }
                             }
-                            break;*/
+                            break;
 
                         }
                     
