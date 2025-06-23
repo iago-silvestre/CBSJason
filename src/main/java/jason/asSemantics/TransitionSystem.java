@@ -1822,6 +1822,7 @@ public class TransitionSystem implements Serializable {
                         
                         case internalAction:
                             System.out.println("internalAction");
+                            System.out.println("Unifier" + u);
                             boolean ok = false;
                             List<Term> errorAnnots = null;
                             try {
