@@ -1937,7 +1937,7 @@ public class TransitionSystem implements Serializable {
                         Iterator<Unifier> r = context.logicalConsequence(ag, new Unifier()); //relUn); //opt.getUnifier());
                         // int i=0;
                         if (r != null && r.hasNext()){
-                            plan.setUnifier(r.next());
+                            //plan.setUnifier(r.next());
                             //System.out.println("  [debug] r != null && r.hasNext()" );
                             PlanBody current = plan.getBody();
                             while (current != null) {
