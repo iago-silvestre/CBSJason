@@ -1042,6 +1042,7 @@ public class TransitionSystem implements Serializable {
             break;
 
         // Rule Test
+        
         case test:
             LogicalFormula f = (LogicalFormula)bTerm;
             if (ag.believes(f, u)) {
@@ -1859,7 +1860,7 @@ public class TransitionSystem implements Serializable {
                             }
                             break;*/
 
-                        case test:
+                        /*case test:
                             System.out.println("test switch case");
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
@@ -1883,6 +1884,33 @@ public class TransitionSystem implements Serializable {
                                 if (fail) {
                                     System.out.println("failed test switch case");
                                     }
+                            }
+                            break;*/
+
+                            case test:
+                            LogicalFormula f = (LogicalFormula)bTerm;
+                            if (ag.believes(f, u)) {
+                                removeActionReQueue(curInt);
+                            } else {
+                                boolean fail = true;
+                                // generate event when using literal in the test (no events for log. expr. like ?(a & b))
+                                if (f.isLiteral() && !(f instanceof BinaryStructure)) {
+                                    body = prepareBodyForEvent(body, u, curInt.peek());
+                                    if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
+                                        Trigger te = new Trigger(TEOperator.add, TEType.test, body);
+                                        evt = new Event(te, curInt);
+                                        if (ag.getPL().hasCandidatePlan(te)) {
+                                            if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
+                                            C.addEvent(evt);
+                                            stepAct = State.StartRC;
+                                            fail = false;
+                                        }
+                                    }
+                                }
+                                if (fail) {
+                                    if (logger.isLoggable(Level.FINE)) logger.fine("Test '"+bTerm+"' failed ("+h.getSrcInfo()+").");
+                                    generateGoalDeletion(curInt, JasonException.createBasicErrorAnnots("test_goal_failed", "Failed to test '"+bTerm+"'"), ASSyntax.createAtom("test_goal_failed"));
+                                }
                             }
                             break;
 
