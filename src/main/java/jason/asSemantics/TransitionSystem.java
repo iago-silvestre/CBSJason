@@ -1927,7 +1927,7 @@ public class TransitionSystem implements Serializable {
                     else{
                         
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
-                         Unifier relUn = plan.isRelevant(cpKey, new Unifier()); //
+                         Unifier relUn = plan.isRelevant(null, new Unifier()); //
                     //     //Option theOpt = new Option(plan, relUn);
                     //     //IntendedMeans im = new IntendedMeans(theOpt, cpKey);
                     // logger.info("     "+plan.getLabel() + " is applicable with unification "+relUn);
