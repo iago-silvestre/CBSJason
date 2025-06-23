@@ -1906,6 +1906,8 @@ public class TransitionSystem implements Serializable {
     private void expedited_deliberate() {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
+        final Intention curInt = C.SI;
+        IntendedMeans im = curInt.peek();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
                 PredicateIndicator  cpKey = entry.getKey();
@@ -1927,7 +1929,7 @@ public class TransitionSystem implements Serializable {
                     else{
                         
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
-                         Unifier relUn = plan.isRelevant(null, new Unifier()); //
+                         Unifier relUn = im.triggerUnif.clone();
                     //     //Option theOpt = new Option(plan, relUn);
                     //     //IntendedMeans im = new IntendedMeans(theOpt, cpKey);
                     // logger.info("     "+plan.getLabel() + " is applicable with unification "+relUn);
