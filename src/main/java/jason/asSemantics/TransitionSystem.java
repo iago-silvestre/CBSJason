@@ -1819,7 +1819,8 @@ public class TransitionSystem implements Serializable {
                             List<Term> errorAnnots = null;
                             try {
                                 InternalAction ia = ((InternalActionLiteral)bTerm).getIA(ag);
-                                Term[] terms      = ia.prepareArguments(body, u); // clone and apply args
+                                //Term[] terms      = ia.prepareArguments(body, u); // clone and apply args
+                                Term[] terms      = ia.prepareArguments(bodyTer, null); // clone and apply args
                                 Object oresult    = ia.execute(this, u, terms);
                                 if (oresult != null) {
                                     ok = oresult instanceof Boolean && (Boolean)oresult;
