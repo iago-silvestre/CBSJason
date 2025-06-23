@@ -1042,7 +1042,7 @@ public class TransitionSystem implements Serializable {
             break;
 
         // Rule Test
-        
+
         case test:
             LogicalFormula f = (LogicalFormula)bTerm;
             if (ag.believes(f, u)) {
@@ -1886,8 +1886,22 @@ public class TransitionSystem implements Serializable {
                                     }
                             }
                             break;*/
+                                // Rule Achieve
+                        case achieve:
+                            body = prepareBodyForEvent(body, u, curInt.peek());
+                            Event evt = C.addAchvGoal(body, curInt);
+                            stepAct = State.StartRC;
+                            checkHardDeadline(evt);
+                            break;
 
-                            case test:
+                        // Rule Achieve as a New Focus (the !! operator)
+                        case achieveNF:
+                            body = prepareBodyForEvent(body, u, null);
+                            evt  = C.addAchvGoal(body, Intention.EmptyInt);
+                            checkHardDeadline(evt);
+                            removeActionReQueue(curInt);
+                            break;
+                        case test:
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
                                 removeActionReQueue(curInt);
@@ -1908,9 +1922,8 @@ public class TransitionSystem implements Serializable {
                                     }
                                 }
                                 if (fail) {
-                                    if (logger.isLoggable(Level.FINE)) logger.fine("Test '"+bTerm+"' failed ("+h.getSrcInfo()+").");
-                                    generateGoalDeletion(curInt, JasonException.createBasicErrorAnnots("test_goal_failed", "Failed to test '"+bTerm+"'"), ASSyntax.createAtom("test_goal_failed"));
-                                }
+                                    System.out.println("failed test switch case");
+                                    }
                             }
                             break;
 
