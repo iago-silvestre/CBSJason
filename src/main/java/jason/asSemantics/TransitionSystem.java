@@ -1801,6 +1801,7 @@ public class TransitionSystem implements Serializable {
                     getLogger().warning("No current plan for this CRL entry. Skipping.");
                     continue;
                     }
+                    Literal body = null;
                     IntendedMeans im = curInt.peek();
                     Unifier     u = im.unif;
                     if (bTerm instanceof Literal)
