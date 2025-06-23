@@ -1795,7 +1795,7 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
-
+                    IntendedMeans topIM = i.pop();
                     final Intention curInt = C.SI;
                     joinRenamedVarsIntoIntentionUnifier(curInt,topIM.unif);
                     if (curInt == null || curInt.peek() == null) {
