@@ -1905,6 +1905,12 @@ public class TransitionSystem implements Serializable {
                             break;
                         case test:
                             LogicalFormula f = (LogicalFormula)bTerm;
+                            Iterator<Unifier> iunifs = ag.getBB().getCandidates(f, u);
+                            if (iunifs.hasNext()) {
+                                Unifier newUnif = iunifs.next();
+                                u.compose(newUnif); // <- CRITICAL LINE to bind variables like T
+                                removeActionReQueue(curInt);
+                            }
                             if (ag.believes(f, u)) {
                                 removeActionReQueue(curInt);
                             } else {
