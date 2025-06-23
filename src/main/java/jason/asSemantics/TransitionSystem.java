@@ -1911,11 +1911,24 @@ public class TransitionSystem implements Serializable {
                             if (f instanceof Literal) {
                                 Literal lit = (Literal) f;
 
+                                // Debug: print the test goal we're trying to unify
+                                System.out.println("[DEBUG] Testing belief query: " + lit);
+                                System.out.println("[DEBUG] Current belief base:");
+
+                                for (Literal bel : ag.getBB()) {
+                                    System.out.println("  - " + bel);
+                                }
+
                                 // Try to unify manually with beliefs and bind variables
                                 for (Literal bel : ag.getBB()) {
                                     Unifier temp = u.clone();
-                                    if (temp.unifies(lit, bel)) {
-                                        u.compose(temp); // ← this binds variables like T or N
+                                    boolean unified = temp.unifies(lit, bel);
+
+                                    // Debug: show unification result
+                                    System.out.println("[DEBUG] Trying to unify " + lit + " with " + bel + " -> " + unified);
+                                    if (unified) {
+                                        System.out.println("[DEBUG] Unifier: " + temp);
+                                        u.compose(temp); // ← bind variables like T or N
                                         removeActionReQueue(curInt);
                                         matched = true;
                                         break;
@@ -1926,7 +1939,6 @@ public class TransitionSystem implements Serializable {
                             if (!matched) {
                                 boolean fail = true;
 
-                                // Generate internal event if it's a simple literal (not compound like ?(a & b))
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
                                     body = prepareBodyForEvent(bodyTer, u, curInt.peek());
 
@@ -1934,8 +1946,8 @@ public class TransitionSystem implements Serializable {
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
                                         evt = new Event(te, curInt);
 
-                                        System.out.println("Trigger = " + te);
-                                        System.out.println("Event = " + evt);
+                                        System.out.println("[DEBUG] Trigger = " + te);
+                                        System.out.println("[DEBUG] Event = " + evt);
 
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE))
@@ -1948,7 +1960,7 @@ public class TransitionSystem implements Serializable {
                                 }
 
                                 if (fail) {
-                                    System.out.println("failed test switch case");
+                                    System.out.println("[DEBUG] Failed test switch case: no unification or fallback plan found.");
                                 }
                             }
 
