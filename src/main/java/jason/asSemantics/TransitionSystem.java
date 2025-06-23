@@ -1862,7 +1862,7 @@ public class TransitionSystem implements Serializable {
                                 ok = true; // just to not generate the event again
                             } catch (Exception e) {
                                 if (body == null)
-                                    logger.log(Level.SEVERE, "Selected an intention with null body in '""' and IM "+im, e);
+                                    logger.log(Level.SEVERE, "Selected an intention with null body and IM "+im, e);
                                 else
                                     logger.log(Level.SEVERE, body.getErrorMsg()+": "+ e.getMessage(), e);
                             } catch (Error e) {
