@@ -1798,7 +1798,7 @@ public class TransitionSystem implements Serializable {
                     
                     final Intention curInt = C.SI;
                     Intention i = C.SE.intention;
-                    joinRenamedVarsIntoIntentionUnifier(i.peek(), i.peek().unif);
+                    joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif);
                     //IntendedMeans topIM = curInt.pop();
                     //joinRenamedVarsIntoIntentionUnifier(curInt,topIM.unif);
                     if (curInt == null || curInt.peek() == null) {
