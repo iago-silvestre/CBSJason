@@ -1807,8 +1807,10 @@ public class TransitionSystem implements Serializable {
                     Literal body = null;
                     IntendedMeans im = curInt.peek();
                     Unifier     u = im.unif;
+            
                     if (bTerm instanceof Literal)
-                        bodyTer = (Literal)bTerm;  
+                        bodyTer = (Literal)bTerm; 
+                        body = (Literal)bTerm;
 
                         switch (pBody.getBodyType()) {
                         case action:
@@ -1909,7 +1911,7 @@ public class TransitionSystem implements Serializable {
                                 boolean fail = true;
                                 // generate event when using literal in the test (no events for log. expr. like ?(a & b))
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    body = prepareBodyForEvent(body, u, curInt.peek());
+                                    body = prepareBodyForEvent(bodyTer, u, curInt.peek());
                                     if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
                                         evt = new Event(te, curInt);
