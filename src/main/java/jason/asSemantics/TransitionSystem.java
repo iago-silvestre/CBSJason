@@ -1809,16 +1809,75 @@ public class TransitionSystem implements Serializable {
 
                         switch (pBody.getBodyType()) {
                         case action:
-                        System.out.println("action");    
-                        body = (Literal)body.capply(u);
-                        C.A = new ActionExec(body, curInt);
-                        break;    
+                            System.out.println("action");    
+                            body = (Literal)body.capply(u);
+                            C.A = new ActionExec(body, curInt);
+                            break;    
+
+                        case internalAction:
+                            boolean ok = false;
+                            List<Term> errorAnnots = null;
+                            try {
+                                InternalAction ia = ((InternalActionLiteral)bTerm).getIA(ag);
+                                Term[] terms      = ia.prepareArguments(body, u); // clone and apply args
+                                Object oresult    = ia.execute(this, u, terms);
+                                if (oresult != null) {
+                                    ok = oresult instanceof Boolean && (Boolean)oresult;
+                                    if (!ok && oresult instanceof Iterator) { // ia result is an Iterator
+                                        Iterator<Unifier> iu = (Iterator<Unifier>)oresult;
+                                        if (iu.hasNext()) {
+                                            // change the unifier of the current IM to the first returned by the IA
+                                            im.unif = iu.next();
+                                            ok = true;
+                                        }
+                                    }
+                                    if (!ok) { // IA returned false
+                                        errorAnnots = JasonException.createBasicErrorAnnots("ia_failed", "");
+                                    }
+                                }
+
+                                if (ok && !ia.suspendIntention())
+                                    removeActionReQueue(curInt);
+                            } catch (NoValueException e) {
+                                // add not ground vars in the message
+                                String msg = e.getMessage() + " Ungrounded variables = [";
+                                String v = "";
+                                for (VarTerm var: body.getSingletonVars()) {
+                                    if (u.get(var) == null) {
+                                        msg += v+var;
+                                        v = ",";
+                                    }
+                                }
+                                msg += "].";
+                                e = new NoValueException(msg);
+                                errorAnnots = e.getErrorTerms();
+                                if (!generateGoalDeletion(curInt, errorAnnots, ASSyntax.createAtom("ia_failed")))
+                                    logger.log(Level.SEVERE, body.getErrorMsg()+": "+ e.getMessage());
+                                ok = true; // just to not generate the event again
+
+                            } catch (JasonException e) {
+                                errorAnnots = e.getErrorTerms();
+                                if (!generateGoalDeletion(curInt, errorAnnots, ASSyntax.createAtom("ia_failed")))
+                                    logger.log(Level.SEVERE, body.getErrorMsg()+": "+ e.getMessage());
+                                ok = true; // just to not generate the event again
+                            } catch (Exception e) {
+                                if (body == null)
+                                    logger.log(Level.SEVERE, "Selected an intention with null body in '"+h+"' and IM "+im, e);
+                                else
+                                    logger.log(Level.SEVERE, body.getErrorMsg()+": "+ e.getMessage(), e);
+                            } catch (Error e) {
+                                logger.log(Level.SEVERE, body.getErrorMsg()+": "+ e.getMessage(), e);
+                            }
+                            if (!ok)
+                                generateGoalDeletion(curInt, errorAnnots, ASSyntax.createAtom("ia_failed"));
+
+                        break;
                         /*case action:
                             //System.out.println("action");
                             action = new ActionExec(bodyTer, null); 
                             if (action != null) 
                                 getAgArch().act(action); 
-                            break; //end action*/
+                            break; //end action
                         
                         case internalAction:
                             System.out.println("internalAction");
@@ -1843,7 +1902,7 @@ public class TransitionSystem implements Serializable {
                             } catch (Error e) {
                                 logger.log(Level.SEVERE, bodyTer.getErrorMsg()+": "+ e.getMessage(), e);
                             }
-                            break;  //end internalAction
+                            break;  //end internalAction*/
 
                             case test:
                             System.out.println("test");    
