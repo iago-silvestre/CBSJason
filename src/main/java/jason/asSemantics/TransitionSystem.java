@@ -1907,12 +1907,13 @@ public class TransitionSystem implements Serializable {
                             LogicalFormula f = (LogicalFormula)bTerm;
                             Literal lit = (Literal) f;
 
-                            Iterator<Unifier> iunifs = ag.getBB().getCandidates(lit, u);
-
-                            if (iunifs.hasNext()) {
-                                Unifier newUnif = iunifs.next();
-                                u.compose(newUnif);
-                                removeActionReQueue(curInt);
+                            for (Literal bel : ag.getBB()) {
+                                Unifier copyUnif = u.clone();
+                                if (copyUnif.unifies(lit, bel)) {
+                                    u.compose(copyUnif); // Apply variable bindings like T=5
+                                    removeActionReQueue(curInt);
+                                    break;
+                                }
                             }
                             if (ag.believes(f, u)) {
                                 removeActionReQueue(curInt);
