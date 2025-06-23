@@ -1905,16 +1905,7 @@ public class TransitionSystem implements Serializable {
                             break;
                         case test:
                             LogicalFormula f = (LogicalFormula)bTerm;
-                            Literal lit = (Literal) f;
 
-                            for (Literal bel : ag.getBB()) {
-                                Unifier copyUnif = u.clone();
-                                if (copyUnif.unifies(lit, bel)) {
-                                    u.compose(copyUnif); // Apply variable bindings like T=5
-                                    removeActionReQueue(curInt);
-                                    break;
-                                }
-                            }
                             if (ag.believes(f, u)) {
                                 removeActionReQueue(curInt);
                             } else {
@@ -1924,7 +1915,9 @@ public class TransitionSystem implements Serializable {
                                     body = prepareBodyForEvent(bodyTer, u, curInt.peek());
                                     if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
+                                        System.out.println("Trigger = "+ te);
                                         evt = new Event(te, curInt);
+                                        System.out.println("Event = "+ evt);
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
                                             C.addEvent(evt);
