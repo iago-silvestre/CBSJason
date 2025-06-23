@@ -1944,10 +1944,10 @@ public class TransitionSystem implements Serializable {
                     //     getLogger().log(Level.INFO, "     "+plan.getLabel() + " is applicable with unification "+relUn);
                         boolean allUnifs = plan.isAllUnifs();
                         Iterator<Unifier> r = context.logicalConsequence(ag, relUn); //relUn); //opt.getUnifier());
-                        System.out.println("TS expedited-deliberate | relUn = " + relUn);
+                        //System.out.println("TS expedited-deliberate | relUn = " + relUn);
                         //System.out.println("TS expedited-deliberate | allUnifs = " + allUnifs);
-                        System.out.println("TS expedited-deliberate | r = " + r);
-                        System.out.println("TS expedited-deliberate | context = " + context);
+                        //System.out.println("TS expedited-deliberate | r = " + r);
+                        //System.out.println("TS expedited-deliberate | context = " + context);
 
                         // int i=0;
                         if (r != null && r.hasNext()){
