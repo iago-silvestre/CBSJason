@@ -1925,9 +1925,9 @@ public class TransitionSystem implements Serializable {
                         C.CRL.add(plan.getBody());
                     }
                     else{
-                        System.out.println("TS expedited-deliberate | context = " + context);
+                        
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
-                        // Unifier relUn = plan.isRelevant(cpKey, new Unifier()); //
+                         Unifier relUn = plan.isRelevant(cpKey, new Unifier()); //
                     //     //Option theOpt = new Option(plan, relUn);
                     //     //IntendedMeans im = new IntendedMeans(theOpt, cpKey);
                     // logger.info("     "+plan.getLabel() + " is applicable with unification "+relUn);
@@ -1935,6 +1935,11 @@ public class TransitionSystem implements Serializable {
                     //     getLogger().log(Level.INFO, "     "+plan.getLabel() + " is applicable with unification "+relUn);
                         boolean allUnifs = plan.isAllUnifs();
                         Iterator<Unifier> r = context.logicalConsequence(ag, new Unifier()); //relUn); //opt.getUnifier());
+                        System.out.println("TS expedited-deliberate | relUn = " + relUn);
+                        System.out.println("TS expedited-deliberate | allUnifs = " + allUnifs);
+                        System.out.println("TS expedited-deliberate | r = " + r);
+                        System.out.println("TS expedited-deliberate | context = " + context);
+
                         // int i=0;
                         if (r != null && r.hasNext()){
                             //plan.setUnifier(r.next());
