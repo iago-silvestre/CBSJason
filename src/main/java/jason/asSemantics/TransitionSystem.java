@@ -1949,8 +1949,6 @@ public class TransitionSystem implements Serializable {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         final Intention curInt = C.SI;
-        if (curInt == null)
-            return;
         IntendedMeans im = curInt.peek();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
@@ -1973,14 +1971,14 @@ public class TransitionSystem implements Serializable {
                     else{
                         
                         // boolean allUnifs = plan.isAllUnifs(); //... = opt.getPlan().isAllUnifs();
-                         Unifier relUn = im.triggerUnif.clone();
+                         //Unifier relUn = im.triggerUnif.clone();
                     //     //Option theOpt = new Option(plan, relUn);
                     //     //IntendedMeans im = new IntendedMeans(theOpt, cpKey);
                     // logger.info("     "+plan.getLabel() + " is applicable with unification "+relUn);
                     // if (getLogger().isLoggable(Level.INFO))
                     //     getLogger().log(Level.INFO, "     "+plan.getLabel() + " is applicable with unification "+relUn);
-                        boolean allUnifs = plan.isAllUnifs();
-                        Iterator<Unifier> r = context.logicalConsequence(ag, relUn); //relUn); //opt.getUnifier());
+                        //boolean allUnifs = plan.isAllUnifs();
+                        Iterator<Unifier> r = context.logicalConsequence(ag, new Unifier()); //relUn); //opt.getUnifier());
                         //System.out.println("TS expedited-deliberate | relUn = " + relUn);
                         //System.out.println("TS expedited-deliberate | allUnifs = " + allUnifs);
                         //System.out.println("TS expedited-deliberate | r = " + r);
