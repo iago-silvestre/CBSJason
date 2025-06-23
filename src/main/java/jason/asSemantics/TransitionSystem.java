@@ -1797,6 +1797,7 @@ public class TransitionSystem implements Serializable {
                     Literal   bodyTer = null;
 
                     final Intention curInt = C.SI;
+                    joinRenamedVarsIntoIntentionUnifier(curInt,topIM.unif);
                     if (curInt == null || curInt.peek() == null) {
                     getLogger().warning("No current plan for this CRL entry. Skipping.");
                     continue;
