@@ -1800,10 +1800,6 @@ public class TransitionSystem implements Serializable {
                     final Intention curInt = C.SI;
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
 
-                    if (curInt == null || curInt.peek() == null) {
-                    getLogger().warning("No current plan for this CRL entry. Skipping.");
-                    continue;
-                    }
                     Literal body = null;
                     IntendedMeans im = curInt.peek();
                     Unifier     u = im.unif;
@@ -1949,6 +1945,11 @@ public class TransitionSystem implements Serializable {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         final Intention curInt = C.SI;
+        if (curInt == null)
+            return;
+
+        if (curInt.isFinished())
+            return;
         IntendedMeans im = curInt.peek();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
