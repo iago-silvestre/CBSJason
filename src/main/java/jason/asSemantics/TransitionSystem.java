@@ -1821,7 +1821,7 @@ public class TransitionSystem implements Serializable {
                             break; //end action*/
                         
                         case internalAction:
-                            //System.out.println("internalAction");
+                            System.out.println("internalAction");
                             boolean ok = false;
                             List<Term> errorAnnots = null;
                             try {
@@ -1846,6 +1846,7 @@ public class TransitionSystem implements Serializable {
                             break;  //end internalAction
 
                             case test:
+                            System.out.println("test");    
                             Literal queryLit = (Literal) bTerm;
 
                             //Unifier u = im.unif; // get unifier BEFORE popping anything
