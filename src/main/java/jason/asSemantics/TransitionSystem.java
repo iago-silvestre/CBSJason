@@ -1795,9 +1795,12 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
-                    IntendedMeans topIM = i.pop();
+                    
                     final Intention curInt = C.SI;
-                    joinRenamedVarsIntoIntentionUnifier(curInt,topIM.unif);
+                    Intention i = C.SE.intention;
+                    joinRenamedVarsIntoIntentionUnifier(i.peek(), i.peek().unif);
+                    //IntendedMeans topIM = curInt.pop();
+                    //joinRenamedVarsIntoIntentionUnifier(curInt,topIM.unif);
                     if (curInt == null || curInt.peek() == null) {
                     getLogger().warning("No current plan for this CRL entry. Skipping.");
                     continue;
