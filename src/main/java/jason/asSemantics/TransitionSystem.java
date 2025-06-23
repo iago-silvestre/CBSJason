@@ -1821,14 +1821,14 @@ public class TransitionSystem implements Serializable {
                             break; //end action
                         
                         case internalAction:
-                            System.out.println("internalAction");
-                            System.out.println("Unifier" + u);
+                            //System.out.println("internalAction");
+                            //System.out.println("Unifier" + u);
                             boolean ok = false;
                             List<Term> errorAnnots = null;
                             try {
                                 InternalAction ia = ((InternalActionLiteral)bTerm).getIA(ag);
                                 Term[] terms      = ia.prepareArguments(bodyTer, u); // clone and apply args
-                                System.out.println(Arrays.toString(terms));
+                                //System.out.println(Arrays.toString(terms));
                                 Object oresult    = ia.execute(this, u, terms);
                                 if (oresult != null) {
                                     ok = oresult instanceof Boolean && (Boolean)oresult;
@@ -1846,50 +1846,6 @@ public class TransitionSystem implements Serializable {
                             }
                             break;  //end internalAction*/
 
-                        /*case test:
-                            System.out.println("test");    
-                            Literal queryLit = (Literal) bTerm;
-
-                            //Unifier u = im.unif; // get unifier BEFORE popping anything
-
-                            for (Literal belief : getAg().getBB()) {
-                                Unifier uq = new Unifier();
-                                if (uq.unifies(queryLit, belief)) {
-                                    getLogger().info("[Query] Matched " + queryLit + " with " + belief + " => " + uq);
-
-                                    u.compose(uq);     // apply unification to plan
-                                    break;
-                                }
-                            }
-                            break;*/
-
-                        /*case test:
-                            System.out.println("test switch case");
-                            LogicalFormula f = (LogicalFormula)bTerm;
-                            if (ag.believes(f, u)) {
-                                removeActionReQueue(curInt);
-                            } else {
-                                boolean fail = true;
-                                // generate event when using literal in the test (no events for log. expr. like ?(a & b))
-                                if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    bodyTer = prepareBodyForEvent(bodyTer, u, curInt.peek());
-                                    if (bodyTer.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
-                                        Trigger te = new Trigger(TEOperator.add, TEType.test, bodyTer);
-                                        Event evt = new Event(te, curInt);
-                                        if (ag.getPL().hasCandidatePlan(te)) {
-                                            if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
-                                            C.addEvent(evt);
-                                            stepAct = State.StartRC;
-                                            fail = false;
-                                        }
-                                    }
-                                }
-                                if (fail) {
-                                    System.out.println("failed test switch case");
-                                    }
-                            }
-                            break;*/
-                                // Rule Achieve
                         case achieve:
                             body = prepareBodyForEvent(body, u, curInt.peek());
                             Event evt = C.addAchvGoal(body, curInt);
@@ -1928,7 +1884,7 @@ public class TransitionSystem implements Serializable {
                                     // Debug: show unification result
                                     //System.out.println("[DEBUG] Trying to unify " + lit + " with " + bel + " -> " + unified);
                                     if (unified) {
-                                        System.out.println("[DEBUG] Unifier: " + temp);
+                                        //System.out.println("[DEBUG] Unifier: " + temp);
                                         u.compose(temp); // ← bind variables like T or N
                                         curInt.peek().setUnif(temp);
                                         removeActionReQueue(curInt);
@@ -1948,8 +1904,8 @@ public class TransitionSystem implements Serializable {
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
                                         evt = new Event(te, curInt);
 
-                                        System.out.println("[DEBUG] Trigger = " + te);
-                                        System.out.println("[DEBUG] Event = " + evt);
+                                        //System.out.println("[DEBUG] Trigger = " + te);
+                                        //System.out.println("[DEBUG] Event = " + evt);
 
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE))
@@ -1967,34 +1923,6 @@ public class TransitionSystem implements Serializable {
                             }
 
                             break;
-                        /*case test:
-                            LogicalFormula f = (LogicalFormula)bTerm;
-
-                            if (ag.believes(f, u)) {
-                                removeActionReQueue(curInt);
-                            } else {
-                                boolean fail = true;
-                                // generate event when using literal in the test (no events for log. expr. like ?(a & b))
-                                if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    body = prepareBodyForEvent(bodyTer, u, curInt.peek());
-                                    if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
-                                        Trigger te = new Trigger(TEOperator.add, TEType.test, body);
-                                        System.out.println("Trigger = "+ te);
-                                        evt = new Event(te, curInt);
-                                        System.out.println("Event = "+ evt);
-                                        if (ag.getPL().hasCandidatePlan(te)) {
-                                            if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
-                                            C.addEvent(evt);
-                                            stepAct = State.StartRC;
-                                            fail = false;
-                                        }
-                                    }
-                                }
-                                if (fail) {
-                                    System.out.println("failed test switch case");
-                                    }
-                            }
-                            break;*/
 
                         }
                     
@@ -2021,6 +1949,8 @@ public class TransitionSystem implements Serializable {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         final Intention curInt = C.SI;
+        if (curInt == null)
+            return;
         IntendedMeans im = curInt.peek();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
