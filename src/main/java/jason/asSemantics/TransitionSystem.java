@@ -1904,6 +1904,56 @@ public class TransitionSystem implements Serializable {
                             removeActionReQueue(curInt);
                             break;
                         case test:
+                            LogicalFormula f = (LogicalFormula) bTerm;
+
+                            boolean matched = false;
+
+                            if (f instanceof Literal) {
+                                Literal lit = (Literal) f;
+
+                                // Try to unify manually with beliefs and bind variables
+                                for (Literal bel : ag.getBB()) {
+                                    Unifier temp = u.clone();
+                                    if (temp.unifies(lit, bel)) {
+                                        u.compose(temp); // ← this binds variables like T or N
+                                        removeActionReQueue(curInt);
+                                        matched = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!matched) {
+                                boolean fail = true;
+
+                                // Generate internal event if it's a simple literal (not compound like ?(a & b))
+                                if (f.isLiteral() && !(f instanceof BinaryStructure)) {
+                                    body = prepareBodyForEvent(bodyTer, u, curInt.peek());
+
+                                    if (body.isLiteral()) {
+                                        Trigger te = new Trigger(TEOperator.add, TEType.test, body);
+                                        evt = new Event(te, curInt);
+
+                                        System.out.println("Trigger = " + te);
+                                        System.out.println("Event = " + evt);
+
+                                        if (ag.getPL().hasCandidatePlan(te)) {
+                                            if (logger.isLoggable(Level.FINE))
+                                                logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: " + te);
+                                            C.addEvent(evt);
+                                            stepAct = State.StartRC;
+                                            fail = false;
+                                        }
+                                    }
+                                }
+
+                                if (fail) {
+                                    System.out.println("failed test switch case");
+                                }
+                            }
+
+                            break;
+                        /*case test:
                             LogicalFormula f = (LogicalFormula)bTerm;
 
                             if (ag.believes(f, u)) {
@@ -1930,7 +1980,7 @@ public class TransitionSystem implements Serializable {
                                     System.out.println("failed test switch case");
                                     }
                             }
-                            break;
+                            break;*/
 
                         }
                     
