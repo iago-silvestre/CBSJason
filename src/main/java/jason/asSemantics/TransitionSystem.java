@@ -1802,11 +1802,15 @@ public class TransitionSystem implements Serializable {
 
                     Literal body = null;
                     //IntendedMeans im = curInt.peek();
-                    PlanBody emptyBody = new Body(); // empty body
-                    Trigger trigger = new Trigger(Trigger.TEType.add, Trigger.TLType.achieve, Literal.parseLiteral("dummy")); 
-                    Plan dummyPlan = new Plan(trigger, emptyBody);
-                    IntendedMeans im = new IntendedMeans(dummyPlan, null);
-                    Unifier     u = im.unif;
+                    /*Trigger trigger = new Trigger(Trigger.TEType.add, Trigger.TLType.achieve, Literal.parseLiteral("dummy"));
+                    PlanBody body = new Body();  // empty plan body
+                    Plan dummyPlan = new Plan(trigger, body);
+                    Unifier un = new Unifier();
+                    // Create an Option from the dummy plan
+                    Option opt = new Option(dummyPlan, un, null);*/
+
+                    //IntendedMeans im = new IntendedMeans(dummyPlan, null);
+                    Unifier     u = new Unifier();
             
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm; 
