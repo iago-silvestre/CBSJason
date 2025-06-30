@@ -1801,7 +1801,8 @@ public class TransitionSystem implements Serializable {
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
 
                     Literal body = null;
-                    IntendedMeans im = curInt.peek();
+                    //IntendedMeans im = curInt.peek();
+                    IntendedMeans im = new IntendedMeans(null, null);
                     Unifier     u = im.unif;
             
                     if (bTerm instanceof Literal)
