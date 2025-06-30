@@ -1802,11 +1802,12 @@ public class TransitionSystem implements Serializable {
 
                     Literal body = null;
                     //IntendedMeans im = curInt.peek();
+                    Unifier u;
                     try {
                     IntendedMeans im = curInt.peek();  // May throw NullPointerException
-                    Unifier u = im.unif;                        // May also throw if im is null
+                    u = im.unif;                        // May also throw if im is null
                     } catch (Exception e) {
-                    Unifier u = new Unifier();                 // Fallback: create new Unifier
+                    u = new Unifier();                 // Fallback: create new Unifier
                     }
             
                     if (bTerm instanceof Literal)
