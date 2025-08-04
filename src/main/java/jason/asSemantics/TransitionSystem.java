@@ -439,10 +439,7 @@ public class TransitionSystem implements Serializable {
         // Rule for atomic, if there is an atomic intention, do not select event
         if (C.hasAtomicIntention()) {
             stepDeliberate = State.ProcAct; // need to go to ProcAct to see if an atomic intention received a feedback action
-            if (C.SE.getIntention() == null || C.SE.getIntention().peek() == null) {
-                logger.warning("Null or empty intention stack in applyRelApplPlRule2 for event: " + C.SE.getTrigger());
-                return;
-            }
+            
             return;
         }
 
@@ -640,6 +637,10 @@ public class TransitionSystem implements Serializable {
             // relevant by chance, so just carry on instead of dropping the
             // intention
             Intention i = C.SE.intention;
+            if (i.peek() == null) {
+                logger.warning("Intention.peek() is null before joinRenamedVarsIntoIntentionUnifier");
+                return;
+            }
             joinRenamedVarsIntoIntentionUnifier(i.peek(), i.peek().unif);
             removeActionReQueue(i);
         } else if (setts.requeue()) {
