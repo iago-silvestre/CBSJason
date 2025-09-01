@@ -1893,7 +1893,7 @@ public class TransitionSystem implements Serializable {
                                     if (unified) {
                                         //System.out.println("[DEBUG] Unifier: " + temp);
                                         u.compose(temp); // ← bind variables like T or N
-                                        //curInt.peek().setUnif(temp);
+                                        curInt.peek().setUnif(temp);
                                         removeActionReQueue(curInt);
                                         matched = true;
                                         break;
