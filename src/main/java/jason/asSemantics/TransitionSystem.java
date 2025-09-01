@@ -1955,13 +1955,13 @@ public class TransitionSystem implements Serializable {
     private void expedited_deliberate() {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
-        final Intention curInt = C.SI;
+        /*final Intention curInt = C.SI;
         if (curInt == null)
             return;
 
         if (curInt.isFinished())
             return;
-        IntendedMeans im = curInt.peek();
+        IntendedMeans im = curInt.peek();*/
         System.out.println("Expedited Deliberate C.CPM = " + C.CPM);
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
