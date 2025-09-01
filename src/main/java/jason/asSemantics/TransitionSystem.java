@@ -1966,7 +1966,7 @@ public class TransitionSystem implements Serializable {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
                 //PredicateIndicator  cpKey = entry.getKey();
                 //System.out.println("cpKey = " + cpKey);
-                PredicateIndicator cpKey = "+cb0/0";
+                PredicateIndicator cpKey = +cb0/0;
                 /*for (Literal bel : ag.getBB()) {
                     if (bel.getFunctor().equals("critical_percept") && bel.getArity() == 1) {
                         System.out.println("  [debug] critical_percept value: " + bel.getTerm(0));
