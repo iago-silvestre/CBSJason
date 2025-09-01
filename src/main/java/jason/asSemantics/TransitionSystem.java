@@ -1770,9 +1770,9 @@ public class TransitionSystem implements Serializable {
             start = System.nanoTime();
             synchronized (C.syncApPlanSense) {
                 cbsPercepts = getAgArch().perceiveCP();
-                //System.out.println(Arrays.toString(cbsPercepts));
+                System.out.println(Arrays.toString(cbsPercepts));
                 count = Arrays.stream(cbsPercepts).filter(Boolean::booleanValue).count();
-                //System.out.println("Number of true values: " + count);
+                System.out.println("Number of true values: " + count);
             }
             endPer = System.nanoTime();           
         } catch (Exception e) {
@@ -1783,7 +1783,7 @@ public class TransitionSystem implements Serializable {
         try {
             //if(count>0){  //FIX remove in optmized version (above did not work)
             if(C.CPM.size() > 0){
-                //System.out.println("entering critical mode");
+                System.out.println("entering critical mode");
                 cModeActive = true;
                 getAg().getBB().add(cModeLit);
                 // int i=0;
@@ -1793,9 +1793,9 @@ public class TransitionSystem implements Serializable {
 
                 //3. trigger all elements within CRL (enabled CRs)
                 ActionExec action = null;
-                //System.out.println(C.CRL);
+                System.out.println(C.CRL);
                 for (PlanBody pBody : C.CRL){
-                    //System.out.println(pBody);
+                    System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
                 //     boolean isEnabled = tp.getFirst();
                 //     PlanBody        h = tp.getSecond();
