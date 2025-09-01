@@ -1783,7 +1783,7 @@ public class TransitionSystem implements Serializable {
         try {
             //if(count>0){  //FIX remove in optmized version (above did not work)
             if(C.CPM.size() > 0){
-                System.out.println("entering critical mode");
+                //System.out.println("entering critical mode");
                 cModeActive = true;
                 getAg().getBB().add(cModeLit);
                 // int i=0;
@@ -1982,7 +1982,7 @@ public class TransitionSystem implements Serializable {
                     // }
                     if (context == null) { // context is true
                         C.CRL.add(plan.getBody());
-                        System.out.println("context true  = " + plan.getBody());
+                        //System.out.println("context true  = " + plan.getBody());
                     }
                     else{
                         
@@ -2006,7 +2006,7 @@ public class TransitionSystem implements Serializable {
                             //System.out.println("  [debug] r != null && r.hasNext()" );
                             PlanBody current = plan.getBody();
                             while (current != null) {
-                                System.out.println("current  = " + current);
+                                //System.out.println("current  = " + current);
                                 C.CRL.add(current);
                                 current = current.getBodyNext();
                             }
