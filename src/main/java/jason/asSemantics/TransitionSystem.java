@@ -1795,7 +1795,7 @@ public class TransitionSystem implements Serializable {
                 ActionExec action = null;
                 //System.out.println(C.CRL);
                 for (PlanBody pBody : C.CRL){
-                    System.out.println(pBody);
+                    //System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
                 //     boolean isEnabled = tp.getFirst();
                 //     PlanBody        h = tp.getSecond();
@@ -1956,15 +1956,16 @@ public class TransitionSystem implements Serializable {
         //System.out.println("  debug expedited deliberate");
         C.CRL.clear();
         final Intention curInt = C.SI;
-        /*if (curInt == null)
+        if (curInt == null)
             return;
 
         if (curInt.isFinished())
-            return;*/
+            return;
         IntendedMeans im = curInt.peek();
         for (Map.Entry<PredicateIndicator, Boolean> entry : C.CPM.entrySet()) {
             //if (entry.getValue()) { \\No need, it only has currently-valid CPs
                 PredicateIndicator  cpKey = entry.getKey();
+                System.out.println("cpKey = " + cpKey);
                 /*for (Literal bel : ag.getBB()) {
                     if (bel.getFunctor().equals("critical_percept") && bel.getArity() == 1) {
                         System.out.println("  [debug] critical_percept value: " + bel.getTerm(0));
