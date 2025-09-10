@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.LinkedHashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -106,7 +107,8 @@ public class Circumstance implements Serializable, ToDOM {
         PE = new ConcurrentHashMap<>();
         FA = new ConcurrentLinkedQueue<>();
 
-        CPM = new ConcurrentHashMap<>();
+        //CPM = new ConcurrentHashMap<>();
+        CPM = new LinkedHashMap<>();
         // CLM = new ConcurrentHashMap<>();
         CRL = new ArrayList<>(); 
     }
