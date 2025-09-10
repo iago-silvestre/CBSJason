@@ -1982,7 +1982,7 @@ public class TransitionSystem implements Serializable {
                     // }
                     if (context == null) { // context is true
                         C.CRL.add(plan.getBody());
-                        System.out.println("context true  = " + plan.getBody());
+                        //System.out.println("context true  = " + plan.getBody());
                     }
                     else{
                         
