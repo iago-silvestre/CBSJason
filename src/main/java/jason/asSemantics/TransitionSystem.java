@@ -2006,7 +2006,7 @@ public class TransitionSystem implements Serializable {
                             //System.out.println("  [debug] r != null && r.hasNext()" );
                             PlanBody current = plan.getBody();
                             while (current != null) {
-                                //System.out.println("current  = " + current);
+                                System.out.println("current  = " + current);
                                 C.CRL.add(current);
                                 current = current.getBodyNext();
                             }
