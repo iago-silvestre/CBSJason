@@ -1852,6 +1852,15 @@ public class TransitionSystem implements Serializable {
                 //3. trigger all elements within CRL (enabled CRs)
                 ActionExec action = null;
                 //System.out.println(C.CRL);
+                final Intention curInt = C.SI;
+                Unifier u;
+                try {
+                    IntendedMeans im = curInt.peek();  // May throw NullPointerException
+                    u = im.unif;                        // May also throw if im is null
+                } catch (Exception e) {
+                    u = new Unifier();                 // Fallback: create new Unifier
+                    }
+                    
                 for (PlanBody pBody : C.CRL){
                     //System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
@@ -1860,18 +1869,12 @@ public class TransitionSystem implements Serializable {
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
                     
-                    final Intention curInt = C.SI;
+                    
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
 
                     Literal body = null;   //Going back to old version for now to debug
                     //IntendedMeans im = curInt.peek();
-                    Unifier u;
-                    try {
-                    IntendedMeans im = curInt.peek();  // May throw NullPointerException
-                    u = im.unif;                        // May also throw if im is null
-                    } catch (Exception e) {
-                    u = new Unifier();                 // Fallback: create new Unifier
-                    }
+                    
             
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm; 
