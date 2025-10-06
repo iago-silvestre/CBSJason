@@ -1802,7 +1802,7 @@ public class TransitionSystem implements Serializable {
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
                     
-                    final Intention curInt = C.SI;
+                    /*final Intention curInt = C.SI;
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
 
                     Literal body = null;   //Going back to old version for now to debug
@@ -1813,6 +1813,17 @@ public class TransitionSystem implements Serializable {
                     u = im.unif;                        // May also throw if im is null
                     } catch (Exception e) {
                     u = new Unifier();                 // Fallback: create new Unifier
+                    }*/
+                   // Safe access to current intention
+                    Intention curInt = C.SI;
+                    IntendedMeans im = null;
+                    Unifier u = new Unifier();
+
+                    if (curInt != null) {
+                        im = curInt.peek();
+                        if (im != null && im.unif != null) {
+                            u = im.unif.clone();
+                        }
                     }
             
                     if (bTerm instanceof Literal)
@@ -1871,18 +1882,7 @@ public class TransitionSystem implements Serializable {
                             LogicalFormula f = (LogicalFormula) bTerm;
                             boolean matched = false;
 
-                            // Safe access to current intention
-                            Intention curInt = C.SI;
-                            IntendedMeans im = null;
-                            Unifier u = new Unifier();
-
-                            if (curInt != null && !curInt.isEmpty()) {
-                                im = curInt.peek();
-                                if (im != null && im.unif != null) {
-                                    u = im.unif.clone();
-                                }
-                            }
-
+                            
                             // ---- Belief Query Phase ----
                             if (f instanceof Literal) {
                                 Literal lit = (Literal) f;
@@ -1912,12 +1912,12 @@ public class TransitionSystem implements Serializable {
 
                                     if (body.isLiteral()) {
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
-                                        Event evt = new Event(te, curInt);
+                                        Event evtQ = new Event(te, curInt);
 
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE))
                                                 logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: " + te);
-                                            C.addEvent(evt);
+                                            C.addEvent(evtQ);
                                             stepAct = State.StartRC;
                                             fail = false;
                                         }
