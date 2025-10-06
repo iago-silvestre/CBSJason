@@ -1929,7 +1929,7 @@ public class TransitionSystem implements Serializable {
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
                                 System.out.println("Debugging removeActionRequeue ");
-                                removeActionReQueue(curInt);
+                                //removeActionReQueue(curInt);
                             } /*else {
                                 boolean fail = true;
                                 // generate event when using literal in the test (no events for log. expr. like ?(a & b))
