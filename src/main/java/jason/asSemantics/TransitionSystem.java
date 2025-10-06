@@ -1444,16 +1444,16 @@ public class TransitionSystem implements Serializable {
     }
 
     /** remove the top action and requeue the current intention */
-    /*private void removeActionReQueue(Intention i) {
+    private void removeActionReQueue(Intention i) {
         if (!i.isFinished()) {
             i.peek().removeCurrentStep();
             C.addRunningIntention(i);
         } else {
             logger.fine("trying to update a finished intention!");
         }
-    }*/
+    }
 
-   private void removeActionReQueue(Intention i) {
+   /*private void removeActionReQueue(Intention i) {
         // --- Defensive: handle null intention entirely ---
         if (i == null) {
             logger.fine("removeActionReQueue called with null intention — skipping.");
