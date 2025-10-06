@@ -1930,7 +1930,7 @@ public class TransitionSystem implements Serializable {
                             if (ag.believes(f, u)) {
                                 System.out.println("Debugging removeActionRequeue ");
                                 removeActionReQueue(curInt);
-                            } else {
+                            } /*else {
                                 boolean fail = true;
                                 // generate event when using literal in the test (no events for log. expr. like ?(a & b))
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
@@ -1950,7 +1950,7 @@ public class TransitionSystem implements Serializable {
                                     if (logger.isLoggable(Level.FINE)) logger.fine("Test '"+bTerm+"' failed ("+pBody.getSrcInfo()+").");
                                     generateGoalDeletion(curInt, JasonException.createBasicErrorAnnots("test_goal_failed", "Failed to test '"+bTerm+"'"), ASSyntax.createAtom("test_goal_failed"));
                                 }
-                            }
+                            }*/
                             break;
 
                         }
