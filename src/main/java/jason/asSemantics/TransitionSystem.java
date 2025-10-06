@@ -1875,14 +1875,6 @@ public class TransitionSystem implements Serializable {
                             if (f instanceof Literal) {
                                 Literal lit = (Literal) f;
 
-                                // Debug: print the test goal we're trying to unify
-                                /*System.out.println("[DEBUG] Testing belief query: " + lit);
-                                System.out.println("[DEBUG] Current belief base:");
-
-                                for (Literal bel : ag.getBB()) {
-                                    System.out.println("  - " + bel);
-                                }*/
-
                                 // Try to unify manually with beliefs and bind variables
                                 for (Literal bel : ag.getBB()) {
                                     Unifier temp = u.clone();
@@ -1893,8 +1885,8 @@ public class TransitionSystem implements Serializable {
                                     if (unified) {
                                         //System.out.println("[DEBUG] Unifier: " + temp);
                                         u.compose(temp); // ← bind variables like T or N
-                                        //curInt.peek().setUnif(temp);
-                                        //removeActionReQueue(curInt);
+                                        curInt.peek().setUnif(temp);
+                                        removeActionReQueue(curInt);
                                         matched = true;
                                         break;
                                     }
