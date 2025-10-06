@@ -1879,13 +1879,13 @@ public class TransitionSystem implements Serializable {
 
                         switch (pBody.getBodyType()) {
                         case action:
-                            System.out.println(" current U: "+u);
+                            System.out.println("Action current U: "+u);
                             body = (Literal)body.capply(u);
                             C.A = new ActionExec(body, curInt);
                             break;
                         
                         case internalAction:
-                            System.out.println(" current U: "+u);
+                            System.out.println("InternalAction current U: "+u);
                             //System.out.println("internalAction");
                             //System.out.println("Unifier" + u);
                             boolean ok = false;
