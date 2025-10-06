@@ -1860,7 +1860,7 @@ public class TransitionSystem implements Serializable {
                 } catch (Exception e) {
                     u = new Unifier();                 // Fallback: create new Unifier
                     }
-                    
+
                 for (PlanBody pBody : C.CRL){
                     //System.out.println(pBody);
                 // for (Tuple<Boolean, PlanBody> tp : C.CRT) {
@@ -1882,15 +1882,14 @@ public class TransitionSystem implements Serializable {
 
                         switch (pBody.getBodyType()) {
                         case action:
-                            System.out.println("Action current U: "+u);
-                            body = (Literal)body.capply(u);
-                            C.A = new ActionExec(body, curInt);
-                            break;
+                            //System.out.println("action");
+                            action = new ActionExec(bodyTer, null); 
+                            if (action != null) 
+                                getAgArch().act(action); 
+                            break; //end action
                         
                         case internalAction:
-                            System.out.println("InternalAction current U: "+u);
-                            //System.out.println("internalAction");
-                            //System.out.println("Unifier" + u);
+                            //System.out.println("InternalAction current U: "+u);
                             boolean ok = false;
                             List<Term> errorAnnots = null;
                             try {
