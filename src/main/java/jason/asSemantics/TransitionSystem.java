@@ -1926,67 +1926,30 @@ public class TransitionSystem implements Serializable {
                             removeActionReQueue(curInt);
                             break;
                         case test:
-                            LogicalFormula f = (LogicalFormula) bTerm;
-
-                            boolean matched = false;
-
-                            if (f instanceof Literal) {
-                                Literal lit = (Literal) f;
-
-                                // Debug: print the test goal we're trying to unify
-                                /*System.out.println("[DEBUG] Testing belief query: " + lit);
-                                System.out.println("[DEBUG] Current belief base:");
-
-                                for (Literal bel : ag.getBB()) {
-                                    System.out.println("  - " + bel);
-                                }*/
-
-                                // Try to unify manually with beliefs and bind variables
-                                for (Literal bel : ag.getBB()) {
-                                    Unifier temp = u.clone();
-                                    boolean unified = temp.unifies(lit, bel);
-
-                                    // Debug: show unification result
-                                    //System.out.println("[DEBUG] Trying to unify " + lit + " with " + bel + " -> " + unified);
-                                    if (unified) {
-                                        //System.out.println("[DEBUG] Unifier: " + temp);
-                                        u.compose(temp); // ← bind variables like T or N
-                                        curInt.peek().setUnif(temp);
-                                        removeActionReQueue(curInt);
-                                        matched = true;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (!matched) {
+                            LogicalFormula f = (LogicalFormula)bTerm;
+                            if (ag.believes(f, u)) {
+                                removeActionReQueue(curInt);
+                            } else {
                                 boolean fail = true;
-
+                                // generate event when using literal in the test (no events for log. expr. like ?(a & b))
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    body = prepareBodyForEvent(bodyTer, u, curInt.peek());
-
-                                    if (body.isLiteral()) {
+                                    body = prepareBodyForEvent(body, u, curInt.peek());
+                                    if (body.isLiteral()) { // in case body is a var with content that is not a literal (note the VarTerm pass in the instanceof Literal)
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
                                         evt = new Event(te, curInt);
-
-                                        //System.out.println("[DEBUG] Trigger = " + te);
-                                        //System.out.println("[DEBUG] Event = " + evt);
-
                                         if (ag.getPL().hasCandidatePlan(te)) {
-                                            if (logger.isLoggable(Level.FINE))
-                                                logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: " + te);
+                                            if (logger.isLoggable(Level.FINE)) logger.fine("Test Goal '" + bTerm + "' failed as simple query. Generating internal event for it: "+te);
                                             C.addEvent(evt);
                                             stepAct = State.StartRC;
                                             fail = false;
                                         }
                                     }
                                 }
-
                                 if (fail) {
-                                    System.out.println("[DEBUG] Failed test switch case: no unification or fallback plan found.");
+                                    if (logger.isLoggable(Level.FINE)) logger.fine("Test '"+bTerm+"' failed ("+h.getSrcInfo()+").");
+                                    generateGoalDeletion(curInt, JasonException.createBasicErrorAnnots("test_goal_failed", "Failed to test '"+bTerm+"'"), ASSyntax.createAtom("test_goal_failed"));
                                 }
                             }
-
                             break;
 
                         }
