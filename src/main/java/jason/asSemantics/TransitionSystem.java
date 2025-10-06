@@ -1801,11 +1801,11 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
-                    
+                    Literal body = null;   //Going back to old version for now to debug
+
+
                     /*final Intention curInt = C.SI;
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
-
-                    Literal body = null;   //Going back to old version for now to debug
                     //IntendedMeans im = curInt.peek();
                     Unifier u;
                     try {
