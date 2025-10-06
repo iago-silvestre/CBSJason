@@ -1879,11 +1879,9 @@ public class TransitionSystem implements Serializable {
 
                         switch (pBody.getBodyType()) {
                         case action:
-                            //System.out.println("action");
-                            action = new ActionExec(bodyTer, u); 
-                            if (action != null) 
-                                getAgArch().act(action); 
-                            break; //end action
+                            body = (Literal)body.capply(u);
+                            C.A = new ActionExec(body, curInt);
+                            break;
                         
                         case internalAction:
                             //System.out.println("internalAction");
