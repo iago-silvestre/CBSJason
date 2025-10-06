@@ -1867,44 +1867,52 @@ public class TransitionSystem implements Serializable {
                             checkHardDeadline(evt);
                             removeActionReQueue(curInt);
                             break;
-                        case test:
+                        case test: 
                             LogicalFormula f = (LogicalFormula) bTerm;
-
                             boolean matched = false;
 
+                            // Safe access to current intention
+                            Intention curInt = C.SI;
+                            IntendedMeans im = null;
+                            Unifier u = new Unifier();
+
+                            if (curInt != null && !curInt.isEmpty()) {
+                                im = curInt.peek();
+                                if (im != null && im.unif != null) {
+                                    u = im.unif.clone();
+                                }
+                            }
+
+                            // ---- Belief Query Phase ----
                             if (f instanceof Literal) {
                                 Literal lit = (Literal) f;
 
-                                // Try to unify manually with beliefs and bind variables
                                 for (Literal bel : ag.getBB()) {
                                     Unifier temp = u.clone();
-                                    boolean unified = temp.unifies(lit, bel);
-
-                                    // Debug: show unification result
-                                    //System.out.println("[DEBUG] Trying to unify " + lit + " with " + bel + " -> " + unified);
-                                    if (unified) {
-                                        //System.out.println("[DEBUG] Unifier: " + temp);
-                                        u.compose(temp); // ← bind variables like T or N
-                                        curInt.peek().setUnif(temp);
-                                        removeActionReQueue(curInt);
+                                    if (temp.unifies(lit, bel)) {
+                                        u.compose(temp);
+                                        if (im != null) {
+                                            im.setUnif(u);
+                                        }
                                         matched = true;
+                                        // Debug info
+                                        // System.out.println("[DEBUG] Unified " + lit + " with " + bel + " => " + u);
                                         break;
                                     }
                                 }
                             }
 
+                            // ---- If no match, fall back to event creation ----
                             if (!matched) {
                                 boolean fail = true;
 
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
-                                    body = prepareBodyForEvent(bodyTer, u, curInt.peek());
+                                    Literal litBody = (Literal) f;
+                                    body = prepareBodyForEvent(litBody, u, im);
 
                                     if (body.isLiteral()) {
                                         Trigger te = new Trigger(TEOperator.add, TEType.test, body);
-                                        evt = new Event(te, curInt);
-
-                                        //System.out.println("[DEBUG] Trigger = " + te);
-                                        //System.out.println("[DEBUG] Event = " + evt);
+                                        Event evt = new Event(te, curInt);
 
                                         if (ag.getPL().hasCandidatePlan(te)) {
                                             if (logger.isLoggable(Level.FINE))
@@ -1917,12 +1925,13 @@ public class TransitionSystem implements Serializable {
                                 }
 
                                 if (fail) {
-                                    System.out.println("[DEBUG] Failed test switch case: no unification or fallback plan found.");
+                                    // Debug fallback
+                                    // System.out.println("[DEBUG] Failed test: no unification or fallback plan found.");
                                 }
                             }
 
+                            removeActionReQueue(curInt);
                             break;
-
                         }
                     
             long tExec = System.nanoTime();
