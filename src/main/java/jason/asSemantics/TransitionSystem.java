@@ -1454,15 +1454,15 @@ public class TransitionSystem implements Serializable {
     }*/
 
    private void removeActionReQueue(Intention i) {
-    // --- Defensive: handle null intention entirely ---
+        // --- Defensive: handle null intention entirely ---
         if (i == null) {
             logger.fine("removeActionReQueue called with null intention — skipping.");
             return;
         }
 
         try {
-            // --- Defensive: check if intention is finished or empty ---
-            if (i.isFinished() || i.isEmpty()) {
+            // --- Defensive: check if intention is finished ---
+            if (i.isFinished()) {
                 // Intention done, nothing to requeue
                 return;
             }
@@ -1499,10 +1499,7 @@ public class TransitionSystem implements Serializable {
 
             // If intention still has pending steps, re-insert
             if (!im.isFinished()) {
-                // Only re-enqueue if plan still active
-                if (!i.isEmpty()) {
-                    i.push(im);
-                }
+                i.push(im); // safely re-enqueue current means
             } else {
                 // If no more steps, mark intention as finished
                 i.pop();
