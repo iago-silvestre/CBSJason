@@ -1859,30 +1859,13 @@ public class TransitionSystem implements Serializable {
                 //     PlanBody        h = tp.getSecond();
                     Term        bTerm = pBody.getBodyTerm();
                     Literal   bodyTer = null;
-                    Literal body = null;   //Going back to old version for now to debug
-
-
-                    /*final Intention curInt = C.SI;
+                    
+                    final Intention curInt = C.SI;
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
-                    //IntendedMeans im = curInt.peek();
-                    Unifier u;
-                    try {
-                    IntendedMeans im = curInt.peek();  // May throw NullPointerException
-                    u = im.unif;                        // May also throw if im is null
-                    } catch (Exception e) {
-                    u = new Unifier();                 // Fallback: create new Unifier
-                    }*/
-                   // Safe access to current intention
-                    Intention curInt = C.SI;
-                    IntendedMeans im = null;
-                    Unifier u = new Unifier();
 
-                    if (curInt != null) {
-                        im = curInt.peek();
-                        if (im != null && im.unif != null) {
-                            u = im.unif.clone();
-                        }
-                    }
+                    Literal body = null;
+                    IntendedMeans im = curInt.peek();
+                    Unifier     u = im.unif;
             
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm; 
@@ -1936,13 +1919,23 @@ public class TransitionSystem implements Serializable {
                             checkHardDeadline(evt);
                             removeActionReQueue(curInt);
                             break;
-                         case test:
+                        case test:
                             LogicalFormula f = (LogicalFormula) bTerm;
 
                             boolean matched = false;
 
                             if (f instanceof Literal) {
                                 Literal lit = (Literal) f;
+
+                                // Debug: print the test goal we're trying to unify
+                                /*System.out.println("[DEBUG] Testing belief query: " + lit);
+                                System.out.println("[DEBUG] Current belief base:");
+
+                                for (Literal bel : ag.getBB()) {
+                                    System.out.println("  - " + bel);
+                                }*/
+
+                                // Try to unify manually with beliefs and bind variables
                                 for (Literal bel : ag.getBB()) {
                                     Unifier temp = u.clone();
                                     boolean unified = temp.unifies(lit, bel);
@@ -1961,7 +1954,6 @@ public class TransitionSystem implements Serializable {
                             }
 
                             if (!matched) {
-
                                 boolean fail = true;
 
                                 if (f.isLiteral() && !(f instanceof BinaryStructure)) {
@@ -1990,6 +1982,7 @@ public class TransitionSystem implements Serializable {
                             }
 
                             break;
+
                         }
                     
             long tExec = System.nanoTime();
