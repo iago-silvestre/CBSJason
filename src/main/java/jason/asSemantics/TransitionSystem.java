@@ -1863,9 +1863,15 @@ public class TransitionSystem implements Serializable {
                     final Intention curInt = C.SI;
                     //joinRenamedVarsIntoIntentionUnifier(curInt.peek(), curInt.peek().unif); //test if renamedvars are missing into context
 
-                    Literal body = null;
-                    IntendedMeans im = curInt.peek();
-                    Unifier     u = im.unif;
+                    Literal body = null;   //Going back to old version for now to debug
+                    //IntendedMeans im = curInt.peek();
+                    Unifier u;
+                    try {
+                    IntendedMeans im = curInt.peek();  // May throw NullPointerException
+                    u = im.unif;                        // May also throw if im is null
+                    } catch (Exception e) {
+                    u = new Unifier();                 // Fallback: create new Unifier
+                    }
             
                     if (bTerm instanceof Literal)
                         bodyTer = (Literal)bTerm; 
@@ -1945,8 +1951,8 @@ public class TransitionSystem implements Serializable {
                                     if (unified) {
                                         //System.out.println("[DEBUG] Unifier: " + temp);
                                         u.compose(temp); // ← bind variables like T or N
-                                        curInt.peek().setUnif(temp);
-                                        removeActionReQueue(curInt);
+                                        //curInt.peek().setUnif(temp);
+                                        //removeActionReQueue(curInt);
                                         matched = true;
                                         break;
                                     }
