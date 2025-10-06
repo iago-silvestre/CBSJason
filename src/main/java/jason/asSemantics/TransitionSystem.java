@@ -1444,12 +1444,73 @@ public class TransitionSystem implements Serializable {
     }
 
     /** remove the top action and requeue the current intention */
-    private void removeActionReQueue(Intention i) {
+    /*private void removeActionReQueue(Intention i) {
         if (!i.isFinished()) {
             i.peek().removeCurrentStep();
             C.addRunningIntention(i);
         } else {
             logger.fine("trying to update a finished intention!");
+        }
+    }*/
+
+   private void removeActionReQueue(Intention i) {
+    // --- Defensive: handle null intention entirely ---
+        if (i == null) {
+            logger.fine("removeActionReQueue called with null intention — skipping.");
+            return;
+        }
+
+        try {
+            // --- Defensive: check if intention is finished or empty ---
+            if (i.isFinished() || i.isEmpty()) {
+                // Intention done, nothing to requeue
+                return;
+            }
+
+            // --- Retrieve the current IntendedMeans safely ---
+            IntendedMeans im = null;
+            try {
+                im = i.peek(); // may return null or throw
+            } catch (Exception e) {
+                logger.fine("removeActionReQueue: could not peek intention — skipping requeue.");
+                return;
+            }
+
+            if (im == null) {
+                logger.fine("removeActionReQueue: peek() returned null — skipping requeue.");
+                return;
+            }
+
+            // --- Defensive: check the plan inside IntendedMeans ---
+            Plan plan = im.getPlan();
+            if (plan == null) {
+                logger.fine("removeActionReQueue: no plan in intended means — skipping.");
+                return;
+            }
+
+            // --- Defensive: check plan body iterator ---
+            if (im.getCurrentStep() == null) {
+                logger.fine("removeActionReQueue: current step is null — skipping.");
+                return;
+            }
+
+            // --- Original logic: remove the finished step and, if not finished, push back ---
+            im.removeCurrentStep();
+
+            // If intention still has pending steps, re-insert
+            if (!im.isFinished()) {
+                // Only re-enqueue if plan still active
+                if (!i.isEmpty()) {
+                    i.push(im);
+                }
+            } else {
+                // If no more steps, mark intention as finished
+                i.pop();
+            }
+
+        } catch (Throwable t) {
+            // --- Fail-safe: never allow crash inside reasoning cycle ---
+            logger.log(Level.WARNING, "removeActionReQueue: unexpected error, skipping requeue safely.", t);
         }
     }
 
