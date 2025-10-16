@@ -1930,7 +1930,7 @@ public class TransitionSystem implements Serializable {
                         case test:
                             LogicalFormula f = (LogicalFormula)bTerm;
                             if (ag.believes(f, u)) {
-                                System.out.println("Debugging removeActionRequeue, current U: "+u);
+                                //System.out.println("Debugging removeActionRequeue, current U: "+u);
                                 //removeActionReQueue(curInt);
                             } /*else {
                                 boolean fail = true;
