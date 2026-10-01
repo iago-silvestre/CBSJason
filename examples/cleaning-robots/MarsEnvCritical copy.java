@@ -79,8 +79,8 @@ public class MarsEnvCritical extends Environment {
         setKPerc(Integer.parseInt(args[1]));
 
         model = new MarsModel(); 
-        // view  = new MarsView(model);
-        // model.setView(view);
+        view  = new MarsView(model);
+        model.setView(view);
         updatePercepts();
 
         // LBB: implementation of a new thread for the critical perceptions
@@ -209,14 +209,15 @@ public class MarsEnvCritical extends Environment {
         // long t_curr = System.nanoTime(); //LB: current time
         // logger.info("LBB manualAction " + String.valueOf(0) + " time (ms): " + String.valueOf(t_curr - t_init));   
         //synchronized (cbsArray) {
-            cbsArray[0] = Boolean.FALSE; // reset perception after the action
+            cpArray[0] = Boolean.FALSE; // reset perception after the action
         //}
         reaction_times.add(System.nanoTime()); //LB: saves perception time
+        //logger.info(" doing criticalAction ");
     }
 
     /** creates the agents perception based on the MarsModel */
     void updatePercepts() {
-        if((cbsArray[0] == Boolean.FALSE))
+        if((cpArray[0] == Boolean.FALSE))
             clearPercepts();
         //updateCBS();
 
@@ -299,11 +300,11 @@ public class MarsEnvCritical extends Environment {
 
         // if((cbsArray[0] == Boolean.FALSE) && (stepCtd >= 10) ) {
         //     stepCtd = 0;
-        if((cbsArray[0] == Boolean.FALSE) && getSetFlag() ) {
+        if((cpArray[0] == Boolean.FALSE) && getSetFlag() ) {
             perception_times.add(System.nanoTime()); //LB: saves perception time
             // LBB: bellow used for critical things
-            synchronized (cbsArray) {
-                cbsArray[0] = Boolean.TRUE;    
+            synchronized (cpArray) {
+                cpArray[0] = Boolean.TRUE;    
             }
             // Literal lit = Literal.parseLiteral("cr0Per");
             // addPercept(lit); 
@@ -317,7 +318,7 @@ public class MarsEnvCritical extends Environment {
         if (!isRunning()) return;
 
         // synchronized (requests) {
-        synchronized (cbsArray) {
+        synchronized (cpArray) {
             //step++;
             //logger.info("#"+requests.size());
             //logger.info("#"+overRequests.size());
