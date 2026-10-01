@@ -1,0 +1,46 @@
+Qtd updates:  292
+Qtd CBSupdat: 468
+Qtd perceive: 40
+Qtd reaction: 40
+2th reacTime: 6340594
+3th reacTime: 281397
+4th reacTime: 199308
+5th reacTime: 231638
+6th reacTime: 206358
+7th reacTime: 12428013
+8th reacTime: 125859
+9th reacTime: 152809
+10th reacTime: 188028
+11th reacTime: 118389
+12th reacTime: 8485457
+13th reacTime: 114669
+14th reacTime: 128839
+15th reacTime: 6999511
+16th reacTime: 96609
+17th reacTime: 83949
+18th reacTime: 114129
+19th reacTime: 117819
+20th reacTime: 4772040
+21th reacTime: 125299
+22th reacTime: 115699
+23th reacTime: 143669
+24th reacTime: 96319
+25th reacTime: 103779
+26th reacTime: 124509
+27th reacTime: 95839
+28th reacTime: 9959428
+29th reacTime: 117699
+30th reacTime: 112969
+31th reacTime: 95249
+32th reacTime: 7972266
+33th reacTime: 95679
+34th reacTime: 99009
+35th reacTime: 94009
+36th reacTime: 122739
+37th reacTime: 5318058
+38th reacTime: 100860
+39th reacTime: 101999
+40th reacTime: 117709
+Avg reaction times: 1498939
+Avg time to K Percepts: 1753590
+Elapsed time (in seconds): 27 
